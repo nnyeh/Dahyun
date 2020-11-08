@@ -1,0 +1,5 @@
+/.env
+/dahyun.code-workspace
+/data/database.db
+/cogs/__pycache__
+/data/__pycache__
