@@ -1,4 +1,6 @@
 .env
 dahyun.code-workspace
 data/database.db
-*.pyc
+cogs/__pycache__
+data/__pycache__
+*pyc
