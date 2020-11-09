@@ -75,7 +75,10 @@ class nowplaying(commands.Cog):
 
         r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
         abidata = r3.json()
-        album_url = abidata["album"]["url"]
+        try:
+            album_url = abidata["album"]["url"]
+        except KeyError:
+            album_url = ""
 
         track_info_params = {
             "track": track,
@@ -88,7 +91,10 @@ class nowplaying(commands.Cog):
 
         r4 = requests.get("http://ws.audioscrobbler.com/2.0/", params=track_info_params)
         trackdata = r4.json()
-        track_scrobbles = trackdata["track"]["userplaycount"]
+        try:
+            track_scrobbles = trackdata["track"]["userplaycount"] + " scrobbles of this track"
+        except KeyError:
+            track_scrobbles = "No data on Last.fm"
 
         embed = discord.Embed(
             url = track_url,
@@ -99,7 +105,7 @@ class nowplaying(commands.Cog):
 
         embed.set_author(name=f"{state} {lastfm_username}", icon_url=pfp)
         embed.set_thumbnail(url=image)
-        embed.set_footer(text=f"{artist_tags_string.lower()}\n{track_scrobbles} scrobbles of this track • {artist_playcount} {artist} scrobbles • {total_playcount} total scrobbles")
+        embed.set_footer(text=f"{artist_tags_string.lower()}\n{track_scrobbles} • {artist_playcount} {artist} scrobbles • {total_playcount} total scrobbles")
 
         await ctx.send(embed=embed)
 
