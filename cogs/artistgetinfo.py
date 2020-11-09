@@ -58,8 +58,8 @@ class artistgetinfo(commands.Cog):
         
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
             aidata = r.json()
-            actual_artist = arg
             arg = aidata["artist"]["name"]
+            actual_artist = arg
             artist_url = aidata["artist"]["url"]
             artist_info = aidata["artist"]["bio"]["content"]
             artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
