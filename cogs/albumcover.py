@@ -82,7 +82,7 @@ class albumcover(commands.Cog):
             )
 
             embed.set_image(url=f"{album_cover}")
-            embed.set_footer(text=f"Album cover requested by {lastfm_username}")
+            embed.set_footer(text=f"Album cover requested by {ctx.author.name}#{ctx.author.discriminator}")
 
             await ctx.send(embed=embed)
 

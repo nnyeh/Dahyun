@@ -5,12 +5,12 @@ from discord.ext import commands
 from data import database as db
 from datetime import datetime
 
-class usertopartists(commands.Cog):
+class usertoptags(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=["ta"])
-    async def topartists(self, ctx, *, arg=None):
+    @commands.command(aliases=["tt"])
+    async def toptags(self, ctx, *, arg=None):
 
         if arg is "w":
             arg = "7day"
@@ -56,7 +56,7 @@ class usertopartists(commands.Cog):
         r = requests.get("http://ws.audioscrobbler.com/2.0/", params=top_artists_params)
         tadata = r.json()
         top_artists_names = [name["name"] for name in tadata["topartists"]["artist"]]
-        top_artists_string = "\n".join(top_artists_names)
+        #top_artists_string = 
 
         now = datetime.now()
         timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
@@ -72,4 +72,4 @@ class usertopartists(commands.Cog):
         await ctx.send(embed=embed)
 
 def setup(bot):
-    bot.add_cog(usertopartists(bot))
+    bot.add_cog(usertoptags(bot))
