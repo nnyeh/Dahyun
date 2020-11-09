@@ -25,5 +25,6 @@ bot.load_extension("cogs.nowplaying")
 bot.load_extension("cogs.profile")
 bot.load_extension("cogs.setusername")
 bot.load_extension("cogs.unsetusername")
+bot.load_extension("cogs.usertopartists")
 
 bot.run(TOKEN)
