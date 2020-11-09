@@ -14,6 +14,8 @@ class usertoptags(commands.Cog):
     @commands.command(aliases=["tt"])
     async def toptags(self, ctx, *, arg=None):
 
+        valid_timeframes = "w","m","q","s","y","a",None
+        global timeframe
         if arg is "w":
             arg = "7day"
             timeframe = "of the last week"
@@ -35,6 +37,12 @@ class usertoptags(commands.Cog):
         elif arg is None:
             arg = "7day"
             timeframe = "of the last week"
+        elif arg is not valid_timeframes:
+            await ctx.send(f"`Invalid timeframe` <a:DubuAngry:773329674679746610>")
+            return
+            
+            
+
         
         username = db.get_user(ctx.author.id)
         author = ctx.message.author
@@ -222,11 +230,8 @@ class usertoptags(commands.Cog):
         all_artist_tags = first_artist_tags + second_artist_tags + third_artist_tags + fourth_artist_tags + fifth_artist_tags + sixth_artist_tags + seventh_artist_tags + eighth_artist_tags + ninth_artist_tags + tenth_artist_tags
         random.shuffle(all_artist_tags)
         no_duplicates = set(all_artist_tags)
-        tags_string = " ".join(no_duplicates)
-        no_best_of = (tags_string.replace("best of ", ""))
-        remove_numbers = re.sub(r"[0-9]+ ", "", no_best_of)
-        tags_list = list(remove_numbers.split(" "))
-        all_artist_tags_string = " • ".join(tags_list)
+        all_artist_tags_string = " • ".join(no_duplicates)
+        
 
         now = datetime.now()
         timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
