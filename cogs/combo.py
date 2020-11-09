@@ -107,7 +107,7 @@ class combo(commands.Cog):
         )
 
         embed.set_author(name=f"Active Combo for {lastfm_username}", icon_url=pfp)
-        embed.set_footer(text=f"Requested by {lastfm_username} • {timestamp}")
+        embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
 
         await ctx.send(embed=embed)
 
