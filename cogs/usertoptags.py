@@ -1,5 +1,4 @@
 import os
-import re
 import random
 import discord
 import requests
@@ -14,24 +13,24 @@ class usertoptags(commands.Cog):
     @commands.command(aliases=["tt"])
     async def toptags(self, ctx, *, arg=None):
 
-        valid_timeframes = "w","m","q","s","y","a",None
-        global timeframe
-        if arg is "w":
+        valid_timeframes = ["w", "m", "q", "s", "y", "a", None]
+        timeframe = ""
+        if arg == "w":
             arg = "7day"
             timeframe = "of the last week"
-        elif arg is "m":
+        elif arg == "m":
             arg = "1month"
             timeframe = "of the last month"
-        elif arg is "q":
+        elif arg == "q":
             arg = "3month"
             timeframe = "of the last quarter"
-        elif arg is "s":
+        elif arg == "s":
             arg = "6month"
             timeframe = "of the last semester"
-        elif arg is "y":
+        elif arg == "y":
             arg = "12month"
             timeframe = "of the last year"
-        elif arg is "a":
+        elif arg == "a":
             arg = "overall"
             timeframe = "overall"
         elif arg is None:
