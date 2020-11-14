@@ -1,8 +1,9 @@
 import os
-from discord.ext import commands
 import discord
 from dotenv import load_dotenv
+from discord.ext import commands
 from data import database as db
+from discord.ext.commands import CommandNotFound
 
 bot = commands.Bot(">")
 
@@ -10,6 +11,12 @@ bot = commands.Bot(">")
 async def on_ready():
     print("Online")
     return await bot.change_presence(activity=discord.Activity(type=1))
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, CommandNotFound):
+        return
+    raise error
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
