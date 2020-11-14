@@ -3,6 +3,7 @@ import discord
 import requests
 from discord.ext import commands
 from data import database as db
+from datetime import datetime
 
 class albumcover(commands.Cog):
     def __init__(self, bot):
@@ -20,6 +21,9 @@ class albumcover(commands.Cog):
         if not lastfm_username:
             return await ctx.send(f"`You need to first set your Last.fm username with the command`\n```>set [your username]```")
 
+        now = datetime.now()
+        timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
+
         if arg is None:
             recent_tracks_params = {
                 "limit": "1",
@@ -32,7 +36,6 @@ class albumcover(commands.Cog):
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
             rtdata = r.json()
             rtinfo = rtdata["recenttracks"]["track"][0]
-            album_cover = rtinfo["image"][-1]["#text"]
             artist = rtinfo["artist"]["#text"]
             album = rtinfo["album"]["#text"]
 
@@ -47,17 +50,6 @@ class albumcover(commands.Cog):
 
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
             abidata = r.json()
-            album_url = abidata["album"]["url"]
-
-            embed = discord.Embed(
-            description = f"**{artist} - [{album}]({album_url})**",
-            colour = 0x4a5fc3
-            )
-
-            embed.set_image(url=f"{album_cover}")
-            embed.set_footer(text=f"Album cover requested by {ctx.author.name}#{ctx.author.discriminator}")
-
-            await ctx.send(embed=embed)
         else:
             artist, album = arg.split("|")
             album_info_params = {
@@ -71,20 +63,29 @@ class albumcover(commands.Cog):
 
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
             abidata = r.json()
+
+        try:
             actual_artist = abidata["album"]["artist"]
             actual_album = abidata["album"]["name"]
             album_url = abidata["album"]["url"]
             album_cover = abidata["album"]["image"][-1]["#text"]
-
-            embed = discord.Embed(
-            description = f"**{actual_artist} - [{actual_album}]({album_url})**",
+        except KeyError:
+            return await ctx.send(embed = discord.Embed(
+            description = "No cover was found for this album.",
             colour = 0x4a5fc3
-            )
+        ))
 
-            embed.set_image(url=f"{album_cover}")
-            embed.set_footer(text=f"Album cover requested by {ctx.author.name}#{ctx.author.discriminator}")
+        embed = discord.Embed(
+        description = f"**{actual_artist} - [{actual_album}]({album_url})**",
+        colour = 0x4a5fc3
+        )
 
-            await ctx.send(embed=embed)
+        embed.set_image(url=f"{album_cover}")
+        embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
+
+        await ctx.send(embed=embed)
+
+        
 
 def setup(bot):
     bot.add_cog(albumcover(bot))

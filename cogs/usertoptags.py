@@ -40,9 +40,6 @@ class usertoptags(commands.Cog):
             await ctx.send(f"`Invalid timeframe` <a:DubuAngry:773329674679746610>")
             return
             
-            
-
-        
         username = db.get_user(ctx.author.id)
         author = ctx.message.author
         pfp = author.avatar_url

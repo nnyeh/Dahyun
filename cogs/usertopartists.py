@@ -12,6 +12,7 @@ class usertopartists(commands.Cog):
     @commands.command(aliases=["ta"])
     async def topartists(self, ctx, *, arg=None):
 
+        timeframe = ""
         if arg is "w":
             arg = "7day"
             timeframe = "of the last week"

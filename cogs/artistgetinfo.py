@@ -65,7 +65,6 @@ class artistgetinfo(commands.Cog):
             artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             artist_tags_string = " • ".join(artist_tags)
 
-
         try:
             artist_info = aidata["artist"]["bio"]["content"]
             sep = "<a"
