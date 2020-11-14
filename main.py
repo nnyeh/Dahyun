@@ -2,7 +2,6 @@ import os
 import discord
 from dotenv import load_dotenv
 from discord.ext import commands
-from data import database as db
 from discord.ext.commands import CommandNotFound
 
 bot = commands.Bot(">")
