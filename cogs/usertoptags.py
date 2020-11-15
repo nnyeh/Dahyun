@@ -227,7 +227,6 @@ class usertoptags(commands.Cog):
         random.shuffle(all_artist_tags)
         no_duplicates = set(all_artist_tags)
         all_artist_tags_string = " • ".join(no_duplicates)
-        
 
         now = datetime.now()
         timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
