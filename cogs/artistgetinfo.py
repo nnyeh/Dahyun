@@ -1,8 +1,10 @@
 import os
+import spotipy
 import discord
 import requests
 from discord.ext import commands
 from data import database as db
+from spotipy.oauth2 import SpotifyClientCredentials
 
 class artistgetinfo(commands.Cog):
     def __init__(self, bot):
@@ -69,13 +71,25 @@ class artistgetinfo(commands.Cog):
             artist_info = aidata["artist"]["bio"]["content"]
             sep = "<a"
             artist_info = artist_info.split(sep, 1)[0]
-            if len(artist_info)>900:
-                artist_info = artist_info[:900] + "..."
+            if len(artist_info)>800:
+                artist_info = artist_info[:800] + "..."
         except KeyError:
             return await ctx.send(embed = discord.Embed(
             description = "No wiki was found for this artist, either there is no wiki or the artist was typed incorrectly.",
             colour = 0x4a5fc3
         ))
+
+        sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
+        sp_artist_image = ""
+        results = sp.search(actual_artist, type="artist", limit=20)
+        items = results["artists"]["items"]
+        lfm_artist_name_lowercase = f"{actual_artist.lower()}"
+
+        for sp_artist in items:
+            sp_artist_name_lowercase = sp_artist["name"].lower()
+            if lfm_artist_name_lowercase == sp_artist_name_lowercase:
+                sp_artist_image = sp_artist["images"][0]["url"]
+                break
 
         embed = discord.Embed(
         colour = 0x4a5fc3
@@ -84,6 +98,7 @@ class artistgetinfo(commands.Cog):
         embed.set_author(name=f"Artist info for {lastfm_username} about {actual_artist}")
         embed.add_field(name=f"Summary", value=f"{artist_info}", inline=False)
         embed.add_field(name="\u200b", value=f"[Link to the site]({artist_url})")
+        embed.set_thumbnail(url=f"{sp_artist_image}")
         embed.set_footer(text=f"{artist_tags_string.lower()}")
         await ctx.send(embed=embed)
 
