@@ -1,11 +1,9 @@
 import os
-import spotipy
 import discord
 import requests
 from discord.ext import commands
 from data import database as db
 from datetime import datetime
-from spotipy.oauth2 import SpotifyClientCredentials
 
 class combo(commands.Cog):
     def __init__(self, bot):
@@ -83,18 +81,6 @@ class combo(commands.Cog):
         
         now = datetime.now()
         timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
-
-        sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
-        sp_artist_image = ""
-        results = sp.search(artist_name, type="artist", limit=20)
-        items = results["artists"]["items"]
-        lfm_artist_name_lowercase = f"{artist_name.lower()}"
-
-        for sp_artist in items:
-            sp_artist_name_lowercase = sp_artist["name"].lower()
-            if lfm_artist_name_lowercase == sp_artist_name_lowercase:
-                sp_artist_image = sp_artist["images"][0]["url"]
-                break
 
         for track in tracks: 
             if (track["artist"]["#text"] == first_artist_name):
