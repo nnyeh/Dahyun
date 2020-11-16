@@ -92,7 +92,7 @@ class nowplaying(commands.Cog):
         r4 = requests.get("http://ws.audioscrobbler.com/2.0/", params=track_info_params)
         trackdata = r4.json()
         try:
-            track_scrobbles = trackdata["track"]["userplaycount"] + " scrobbles of this track"
+            track_scrobbles = trackdata["track"]["userplaycount"] + " track scrobbles"
         except KeyError:
             track_scrobbles = "No data on Last.fm"
 
