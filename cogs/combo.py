@@ -100,62 +100,30 @@ class combo(commands.Cog):
             else:
                 break
 
-        # none
-        if artist_combo < 2 and album_combo < 2 and track_combo < 2:
-            embed = discord.Embed(
-            description = f"*No consecutive streak found*",
-            colour = 0x4a5fc3)
-            embed.set_author(name=f"Active Combo for {lastfm_username}", icon_url=pfp)
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
-            return await ctx.send(embed=embed)
-        # artist combo
-        elif artist_combo >= 2 and album_combo < 2 and track_combo < 2:
-            embed = discord.Embed(
-            description = f"**Artist:** {artist_combo} plays in a row - **[{artist_name}]({artist_url})**",
-            colour = 0x4a5fc3)
-            embed.set_author(name=f"Active Combo for {lastfm_username}", icon_url=pfp)
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
-            return await ctx.send(embed=embed)
-        # album combo
-        elif artist_combo < 2 and album_combo >= 2 and track_combo < 2:
-            embed = discord.Embed(
-            description = f"**Album:** {album_combo} plays in a row - **[{album_name}]({album_url})**",
-            colour = 0x4a5fc3)
-            embed.set_author(name=f"Active Combo for {lastfm_username}", icon_url=pfp)
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
-            return await ctx.send(embed=embed)
-        # track combo
-        elif artist_combo < 2 and album_combo < 2 and track_combo >= 2:
-            embed = discord.Embed(
-            description = f"**Track:** {track_combo} plays in a row - **[{track_name}]({track_url})**",
-            colour = 0x4a5fc3)
-            embed.set_author(name=f"Active Combo for {lastfm_username}", icon_url=pfp)
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
-            return await ctx.send(embed=embed)
-        # artist and album combo
-        elif artist_combo >= 2 and album_combo >= 2 and track_combo < 2:
-            embed = discord.Embed(
-            description = f"**Artist:** {artist_combo} plays in a row - **[{artist_name}]({artist_url})**\n**Album:** {album_combo} plays in a row - **[{album_name}]({album_url})**",
-            colour = 0x4a5fc3)
-            embed.set_author(name=f"Active Combo for {lastfm_username}", icon_url=pfp)
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
-            return await ctx.send(embed=embed)
-        # artist and track combo
-        elif artist_combo >= 2 and album_combo < 2 and track_combo >= 2:
-            embed = discord.Embed(
-            description = f"**Artist:** {artist_combo} plays in a row - **[{artist_name}]({artist_url})**\n**Track:** {track_combo} plays in a row - **[{track_name}]({track_url})**",
-            colour = 0x4a5fc3)
-            embed.set_author(name=f"Active Combo for {lastfm_username}", icon_url=pfp)
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
-            return await ctx.send(embed=embed)
-        # artist, album and track combo
-        elif artist_combo >= 2 and album_combo >= 2 and track_combo >= 2:
-            embed = discord.Embed(
-            description = f"**Artist:** {artist_combo} plays in a row - **[{artist_name}]({artist_url})**\n**Album:** {album_combo} plays in a row - **[{album_name}]({album_url})**\n**Track:** {track_combo} plays in a row - **[{track_name}]({track_url})**",
-            colour = 0x4a5fc3)
-            embed.set_author(name=f"Active Combo for {lastfm_username}", icon_url=pfp)
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
-            return await ctx.send(embed=embed)
+        artist_combo_text = ""
+        album_combo_text = ""
+        track_combo_text = ""
+        no_combo_text = ""
+        
+        if artist_combo >= 2:
+            artist_combo_text = f"**Artist:** {artist_combo} plays in a row - **[{artist_name}]({artist_url})**\n"
+        if album_combo >= 2:
+            album_combo_text = f"**Album:** {album_combo} plays in a row - **[{album_name}]({album_url})**\n"
+        if track_combo >= 2:
+            track_combo_text = f"**Track:** {track_combo} plays in a row - **[{track_name}]({track_url})**"
+
+        if artist_combo_text == "" and album_combo_text == "" and track_combo_text == "":
+            no_combo_text = f"*No consecutive tracks found.*"
+
+        embed = discord.Embed(
+        description = f"{no_combo_text}{artist_combo_text}{album_combo_text}{track_combo_text}",
+        colour = 0x4a5fc3
+        )
+
+        embed.set_author(name=f"Active Combo for {lastfm_username}", icon_url=pfp)
+        embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
+        await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(combo(bot))
