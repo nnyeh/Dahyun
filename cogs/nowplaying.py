@@ -96,12 +96,18 @@ class nowplaying(commands.Cog):
         except KeyError:
             track_scrobbles = "No data on Last.fm"
 
-        embed = discord.Embed(
-            url = track_url,
-            title = track,
-            description = f"By **[{artist}]({artist_url})** from **[{album}]({album_url})**",
-            colour = 0x4a5fc3
-        )
+        if album == "":
+            embed = discord.Embed(
+                url = track_url,
+                title = track,
+                description = f"By **[{artist}]({artist_url})**",
+                colour = 0x4a5fc3)
+        else:
+            embed = discord.Embed(
+                url = track_url,
+                title = track,
+                description = f"By **[{artist}]({artist_url})** from **[{album}]({album_url})**",
+                colour = 0x4a5fc3)
 
         embed.set_author(name=f"{state} {lastfm_username}", icon_url=pfp)
         embed.set_thumbnail(url=image)
