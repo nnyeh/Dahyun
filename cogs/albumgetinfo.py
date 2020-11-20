@@ -48,6 +48,7 @@ class albumgetinfo(commands.Cog):
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
             abidata = r.json()
             album_url = abidata["album"]["url"]
+            album_info = abidata["album"]["wiki"]["content"]
             album_tags = [tag["name"] for tag in abidata["album"]["tags"]["tag"]]
             album_tags_string = " • ".join(album_tags)
 
@@ -63,34 +64,41 @@ class albumgetinfo(commands.Cog):
 
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=params)
             abidata = r.json()
-            actual_artist = abidata["album"]["artist"]
+            try:
+                actual_artist = abidata["album"]["artist"]
+            except KeyError:
+                return await ctx.send(embed = discord.Embed(
+                    description = f"This artist's album doesn't exist.",
+                    colour = 0x4a5fc3
+                    ))
             actual_album = abidata["album"]["name"]
+            album_info = abidata["album"]["wiki"]["content"]
             album_url = abidata["album"]["url"]
             album_cover = abidata["album"]["image"][-1]["#text"]
             album_tags = [tag["name"] for tag in abidata["album"]["tags"]["tag"]]
             album_tags_string = " • ".join(album_tags)
 
-        try:
-            album_info = abidata["album"]["wiki"]["content"]
-            sep = "<a"
-            album_info = album_info.split(sep, 1)[0]
-            if len(album_info)>1800:
-                album_info = album_info[:1800] + "..."
-        except KeyError:
-            return await ctx.send(embed = discord.Embed(
-            description = "No wiki was found for this album, either there is no wiki or the album was typed incorrectly.",
-            colour = 0x4a5fc3
-        ))
+        album_info = album_info.strip()
+        sep = "<a"
+        album_info = album_info.split(sep, 1)[0]
+        if len(album_info)>800:
+            album_info = album_info[:800] + "..."
 
         embed = discord.Embed(
         colour = 0x4a5fc3
         )
 
         embed.set_author(name=f"Album info for {lastfm_username} about {actual_artist} - {actual_album}")
-        embed.add_field(name=f"Summary", value=f"{album_info}", inline=False)
-        embed.add_field(name="\u200b", value=f"[Link to the site]({album_url})")
-        embed.set_thumbnail(url=f"{album_cover}")
-        embed.set_footer(text=f"{album_tags_string.lower()}")
+        if album_cover is not None:
+            embed.set_thumbnail(url=f"{album_cover}")
+        if album_info != "":
+            embed.add_field(name=f"Summary", value=f"{album_info}", inline=False)
+        if album_info == "":
+            embed.add_field(name=f"Summary", value=f"*No summary exists for this album.*", inline=False)
+        if album_url is not None:
+            embed.add_field(name="\u200b", value=f"[Link to the site]({album_url})")
+        if album_tags is not None:
+            embed.set_footer(text=f"{album_tags_string.lower()}")
         await ctx.send(embed=embed)
 
 def setup(bot):

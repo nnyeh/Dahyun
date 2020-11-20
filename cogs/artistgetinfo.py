@@ -46,7 +46,7 @@ class artistgetinfo(commands.Cog):
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
             aidata = r.json()
             artist_url = aidata["artist"]["url"]
-            artist_info = aidata["artist"]["bio"]["content"]
+            artist_info = aidata["artist"]["bio"]["summary"]
             artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             artist_tags_string = " • ".join(artist_tags)
 
@@ -60,24 +60,23 @@ class artistgetinfo(commands.Cog):
         
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
             aidata = r.json()
-            arg = aidata["artist"]["name"]
-            actual_artist = arg
+            try:
+                actual_artist = aidata["artist"]["name"]
+            except KeyError:
+                return await ctx.send(embed = discord.Embed(
+                    description = f"This artist doesn't exist.",
+                    colour = 0x4a5fc3
+                    ))
             artist_url = aidata["artist"]["url"]
-            artist_info = aidata["artist"]["bio"]["content"]
+            artist_info = aidata["artist"]["bio"]["summary"]
             artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             artist_tags_string = " • ".join(artist_tags)
 
-        try:
-            artist_info = aidata["artist"]["bio"]["content"]
-            sep = "<a"
-            artist_info = artist_info.split(sep, 1)[0]
-            if len(artist_info)>700:
-                artist_info = artist_info[:700] + "..."
-        except KeyError:
-            return await ctx.send(embed = discord.Embed(
-            description = "No wiki was found for this artist, either there is no wiki or the artist was typed incorrectly.",
-            colour = 0x4a5fc3
-        ))
+        artist_info = artist_info.strip()
+        sep = "<a"
+        artist_info = artist_info.split(sep, 1)[0]
+        if len(artist_info)>800:
+            artist_info = artist_info[:800] + "..."
 
         sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
         sp_artist_image = ""
@@ -103,6 +102,8 @@ class artistgetinfo(commands.Cog):
             embed.set_thumbnail(url=f"{sp_artist_image}")
         if artist_info != "":
             embed.add_field(name=f"Summary", value=f"{artist_info}", inline=False)
+        if artist_info == "":
+            embed.add_field(name=f"Summary", value=f"*No summary exists for this artist.*", inline=False)
         if artist_url is not None:
             embed.add_field(name="\u200b", value=f"[Link to the site]({artist_url})")
         if artist_tags is not None:
