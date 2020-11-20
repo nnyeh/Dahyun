@@ -30,7 +30,6 @@ class genregetinfo(commands.Cog):
 
         r = requests.get("http://ws.audioscrobbler.com/2.0/", params=genre_info_params)
         gidata = r.json()
-        print(gidata)
         try:
             arg = gidata["tag"]["name"]
         except KeyError:
