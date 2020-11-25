@@ -30,7 +30,7 @@ class nowplaying(commands.Cog):
         recent_tracks_params = {
             "limit": "1",
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "user.getRecentTracks"
         }
@@ -52,7 +52,7 @@ class nowplaying(commands.Cog):
         artist_info_params = {
             "artist": artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }
@@ -68,7 +68,7 @@ class nowplaying(commands.Cog):
             "artist": artist,
             "album": album,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "album.getInfo"
         }
@@ -84,7 +84,7 @@ class nowplaying(commands.Cog):
             "track": track,
             "artist": artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "track.getInfo"
         }

@@ -24,7 +24,7 @@ class albumgetinfo(commands.Cog):
             recent_tracks_params = {
                 "limit": "1",
                 "user": lastfm_username,
-                "api_key": os.getenv("API_KEY"),
+                "api_key": os.getenv("LASTFM_API_KEY"),
                 "format": "json",
                 "method": "user.getRecentTracks"
             }
@@ -40,7 +40,7 @@ class albumgetinfo(commands.Cog):
                 "artist": actual_artist,
                 "album": actual_album,
                 "autocorrect": "1",
-                "api_key": os.getenv("API_KEY"),
+                "api_key": os.getenv("LASTFM_API_KEY"),
                 "format": "json",
                 "method": "album.getInfo"
             }
@@ -57,7 +57,7 @@ class albumgetinfo(commands.Cog):
             params = {
                 "artist": artist.strip(),
                 "album": album.strip(),
-                "api_key": os.getenv("API_KEY"),
+                "api_key": os.getenv("LASTFM_API_KEY"),
                 "format": "json",
                 "method": "album.getInfo"
             }

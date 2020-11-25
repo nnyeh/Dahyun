@@ -54,7 +54,7 @@ class usertoptags(commands.Cog):
             "period": arg,
             "limit": "10",
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "user.getTopArtists"
         }
@@ -76,7 +76,7 @@ class usertoptags(commands.Cog):
         artist_info_params = {
             "artist": first_top_artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }
@@ -91,7 +91,7 @@ class usertoptags(commands.Cog):
         artist_info_params = {
             "artist": second_top_artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }
@@ -106,7 +106,7 @@ class usertoptags(commands.Cog):
         artist_info_params = {
             "artist": third_top_artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }
@@ -121,7 +121,7 @@ class usertoptags(commands.Cog):
         artist_info_params = {
             "artist": fourth_top_artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }
@@ -136,7 +136,7 @@ class usertoptags(commands.Cog):
         artist_info_params = {
             "artist": fifth_top_artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }
@@ -151,7 +151,7 @@ class usertoptags(commands.Cog):
         artist_info_params = {
             "artist": sixth_top_artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }
@@ -166,7 +166,7 @@ class usertoptags(commands.Cog):
         artist_info_params = {
             "artist": seventh_top_artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }
@@ -181,7 +181,7 @@ class usertoptags(commands.Cog):
         artist_info_params = {
             "artist": eighth_top_artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }
@@ -196,7 +196,7 @@ class usertoptags(commands.Cog):
         artist_info_params = {
             "artist": ninth_top_artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }
@@ -211,7 +211,7 @@ class usertoptags(commands.Cog):
         artist_info_params = {
             "artist": tenth_top_artist,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }

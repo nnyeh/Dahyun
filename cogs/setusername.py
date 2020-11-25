@@ -11,7 +11,7 @@ class setusername(commands.Cog):
     async def set(self, ctx, username):
         params = {
             "user": username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "user.getInfo"
         }

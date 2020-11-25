@@ -21,7 +21,7 @@ class profile(commands.Cog):
         lastfm_username = username [0][1];
         params = {
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "user.getInfo"
         }

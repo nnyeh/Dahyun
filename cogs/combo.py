@@ -31,7 +31,7 @@ class combo(commands.Cog):
         recent_tracks_params = {
             "limit": "1000",
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "user.getRecentTracks"
         }
@@ -52,7 +52,7 @@ class combo(commands.Cog):
         artist_info_params = {
             "artist": artist_name,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
         }
@@ -65,7 +65,7 @@ class combo(commands.Cog):
             "artist": artist_name,
             "album": album_name,
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "album.getInfo"
         }

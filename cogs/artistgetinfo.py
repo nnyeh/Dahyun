@@ -26,7 +26,7 @@ class artistgetinfo(commands.Cog):
             recent_tracks_params = {
                 "limit": "1",
                 "user": lastfm_username,
-                "api_key": os.getenv("API_KEY"),
+                "api_key": os.getenv("LASTFM_API_KEY"),
                 "format": "json",
                 "method": "user.getRecentTracks"
             }
@@ -38,7 +38,7 @@ class artistgetinfo(commands.Cog):
 
             artist_info_params = {
             "artist": actual_artist,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
             }
@@ -53,7 +53,7 @@ class artistgetinfo(commands.Cog):
         else:
             artist_info_params = {
             "artist": arg,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "artist.getInfo"
             }

@@ -23,7 +23,7 @@ class genregetinfo(commands.Cog):
 
         genre_info_params = {
             "tag": arg,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "tag.getInfo"
         }

@@ -49,7 +49,7 @@ class usertopartists(commands.Cog):
             "period": arg,
             "limit": "10",
             "user": lastfm_username,
-            "api_key": os.getenv("API_KEY"),
+            "api_key": os.getenv("LASTFM_API_KEY"),
             "format": "json",
             "method": "user.getTopArtists"
         }

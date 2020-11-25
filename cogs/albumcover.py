@@ -28,7 +28,7 @@ class albumcover(commands.Cog):
             recent_tracks_params = {
                 "limit": "1",
                 "user": lastfm_username,
-                "api_key": os.getenv("API_KEY"),
+                "api_key": os.getenv("LASTFM_API_KEY"),
                 "format": "json",
                 "method": "user.getRecentTracks"
             }
@@ -43,7 +43,7 @@ class albumcover(commands.Cog):
                 "artist": artist,
                 "album": album,
                 "autocorrect": "1",
-                "api_key": os.getenv("API_KEY"),
+                "api_key": os.getenv("LASTFM_API_KEY"),
                 "format": "json",
                 "method": "album.getInfo"
             }
@@ -56,7 +56,7 @@ class albumcover(commands.Cog):
                 "artist": artist.strip(),
                 "album": album.strip(),
                 "autocorrect": "1",
-                "api_key": os.getenv("API_KEY"),
+                "api_key": os.getenv("LASTFM_API_KEY"),
                 "format": "json",
                 "method": "album.getInfo"
             }
