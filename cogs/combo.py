@@ -44,9 +44,6 @@ class combo(commands.Cog):
         album_name = rtinfo["album"]["#text"]
         track_name = rtinfo["name"]
         track_url = rtinfo["url"]
-        artist_combo = 0
-        album_combo = 0
-        track_combo = 0
 
         artist_info_params = {
             "artist": artist_name,
@@ -83,6 +80,10 @@ class combo(commands.Cog):
         
         now = datetime.now()
         timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
+
+        artist_combo = 0
+        album_combo = 0
+        track_combo = 0
 
         for track in tracks: 
             if (track["artist"]["#text"] == first_artist_name):
