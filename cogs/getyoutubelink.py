@@ -40,6 +40,9 @@ class getyoutubelink(commands.Cog):
             artist = rtinfo["artist"]["#text"]
             track = rtinfo["name"]
 
+            np = "@attr" in rtinfo and "nowplaying" in rtinfo["@attr"]
+            state = f"*Now playing for {lastfm_username}*" if np else f"*Last scrobbled track for {lastfm_username}*"
+
             video_info_params = {
                 "part": "snippet",
                 "type": "video",
@@ -63,10 +66,12 @@ class getyoutubelink(commands.Cog):
             r = requests.get("https://www.googleapis.com/youtube/v3/search", params=video_info_params)
             vidata = r.json()
 
+            state = f"*Link requested by {ctx.author.name}#{ctx.author.discriminator}*"
+
         video_id = vidata["items"][0]["id"]["videoId"]
         video_url = f"https://youtube.com/watch?v={video_id}"
 
-        await ctx.send(f"{video_url}")
+        await ctx.send(f"{state}\n{video_url}")
 
 def setup(bot):
     bot.add_cog(getyoutubelink(bot))
