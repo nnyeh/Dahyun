@@ -42,7 +42,6 @@ class combo(commands.Cog):
         rtinfo = rtdata["recenttracks"]["track"][0]
         artist_name = rtinfo["artist"]["#text"]
         album_name = rtinfo["album"]["#text"]
-        album_cover = rtinfo["image"][-1]["#text"]
         track_name = rtinfo["name"]
         track_url = rtinfo["url"]
         artist_combo = 0
@@ -72,7 +71,10 @@ class combo(commands.Cog):
 
         r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
         abidata = r3.json()
-        album_url = abidata["album"]["url"]
+        try:
+            album_url = abidata["album"]["url"]
+        except KeyError:
+            album_url = ""
         tracks = rtdata["recenttracks"]["track"]
         first_artist_obj = tracks[0]
         first_artist_name = first_artist_obj["artist"]["#text"]
@@ -104,14 +106,16 @@ class combo(commands.Cog):
         album_combo_text = ""
         track_combo_text = ""
         no_combo_text = ""
-        
+
         if artist_combo >= 2:
             artist_combo_text = f"**Artist:** {artist_combo} plays in a row - **[{artist_name}]({artist_url})**\n"
-        if album_combo >= 2:
-            album_combo_text = f"**Album:** {album_combo} plays in a row - **[{album_name}]({album_url})**\n"
+        if album_url == "":
+            album_combo_text = ""
+        else:
+            if album_combo >= 2:
+                album_combo_text = f"**Album:** {album_combo} plays in a row - **[{album_name}]({album_url})**\n"
         if track_combo >= 2:
             track_combo_text = f"**Track:** {track_combo} plays in a row - **[{track_name}]({track_url})**"
-
         if artist_combo_text == "" and album_combo_text == "" and track_combo_text == "":
             no_combo_text = f"*No consecutive tracks found.*"
 
