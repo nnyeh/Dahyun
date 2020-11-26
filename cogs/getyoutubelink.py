@@ -1,10 +1,8 @@
 import os
 import discord
 import requests
-import pyyoutube
 from discord.ext import commands
 from data import database as db
-from datetime import datetime
 
 class getyoutubelink(commands.Cog):
     def __init__(self, bot):
