@@ -11,9 +11,6 @@ class getyoutubelink(commands.Cog):
     @commands.command(aliases=["yt"])
     async def youtube(self, ctx, *, arg=None):
 
-        now = datetime.now()
-        timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
-
         if arg is None:
             username = db.get_user(ctx.author.id)
 
@@ -52,12 +49,11 @@ class getyoutubelink(commands.Cog):
             r = requests.get("https://www.googleapis.com/youtube/v3/search", params=video_info_params)
             vidata = r.json()
         else:
-            artist, track = arg.split("|")
             video_info_params = {
                 "part": "snippet",
                 "type": "video",
                 "maxResults": 1,
-                "q": f"{artist} {track}",
+                "q": arg,
                 "key": os.getenv("YOUTUBE_API_KEY"),
             }
 
