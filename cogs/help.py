@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-# discord.errors.Forbidden: 403 Forbidden (error code: 50007): Cannot send messages to this user
 
 class help(commands.Cog):
     def __init__(self, bot):
