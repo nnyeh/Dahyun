@@ -7,7 +7,7 @@ class profile(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(aliases=["pf"])
     async def profile(self, ctx, arg=None):
 
         if arg is None:
