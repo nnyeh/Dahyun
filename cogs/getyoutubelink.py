@@ -1,5 +1,4 @@
 import os
-import discord
 import requests
 from discord.ext import commands
 from data import database as db
