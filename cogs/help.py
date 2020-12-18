@@ -21,7 +21,7 @@ class help(commands.Cog):
         embed.add_field(name=f"**>genreinfo** or **>gi**", value=f"Returns info about a specified genre.", inline=False)
         embed.add_field(name=f"**>youtube** or **>yt**", value=f"Returns a YouTube link.", inline=False)
         embed.add_field(name=f"**>nowplaying** or **>np**", value=f"Returns your current songs info.", inline=False)
-        embed.add_field(name=f"**>nowplayingalbum** or **>npa**", value=f"Returns your current songs info, track scrobbles are replaced by album scrobbles", inline=False)
+        embed.add_field(name=f"**>nowplayingalbum** or **>npa**", value=f"Returns your current songs info, track scrobbles are replaced by album scrobbles.", inline=False)
         embed.add_field(name=f"**>profile** or **>pf**", value=f"Returns a link to the Last.fm profile.", inline=False)
         embed.add_field(name=f"**>set** and **>unset**", value=f"Sets and unsets your username.", inline=False)
         embed.add_field(name=f"**>topartists** or **>ta**", value=f"Returns the top artists of the specified timeframe.", inline=False)
