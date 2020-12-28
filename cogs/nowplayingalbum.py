@@ -59,7 +59,10 @@ class nowplayingalbum(commands.Cog):
 
         r2 = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
         aidata = r2.json()
-        artist_playcount = aidata["artist"]["stats"]["userplaycount"]
+        try:
+            artist_playcount = aidata["artist"]["stats"]["userplaycount"]
+        except KeyError:
+            artist_playcount = "N/A"
         artist_url = aidata["artist"]["url"]
         artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
         artist_tags_string = " • ".join(artist_tags)
