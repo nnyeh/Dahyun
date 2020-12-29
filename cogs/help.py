@@ -19,6 +19,7 @@ class help(commands.Cog):
         embed.add_field(name=f"**>artistinfo** or **>ai**", value=f"Returns the artist info.", inline=False)
         embed.add_field(name=f"**>combo**", value=f"Displays the amount of plays of the same artist, album or song.", inline=False)
         embed.add_field(name=f"**>genreinfo** or **>gi**", value=f"Returns info about a specified genre.", inline=False)
+        embed.add_field(name=f"**>spotify** or **>sp**", value=f"Returns a Spotify link.", inline=False)
         embed.add_field(name=f"**>youtube** or **>yt**", value=f"Returns a YouTube link.", inline=False)
         embed.add_field(name=f"**>nowplaying** or **>np**", value=f"Returns your current songs info.", inline=False)
         embed.add_field(name=f"**>nowplayingalbum** or **>npa**", value=f"Returns your current songs info, track scrobbles are replaced by album scrobbles.", inline=False)
