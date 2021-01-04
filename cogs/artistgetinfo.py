@@ -75,8 +75,8 @@ class artistgetinfo(commands.Cog):
         artist_info = artist_info.strip()
         sep = "<a"
         artist_info = artist_info.split(sep, 1)[0]
-        if len(artist_info)>800:
-            artist_info = artist_info[:800] + "..."
+        if len(artist_info)>460:
+            artist_info = artist_info[:460] + "..."
 
         sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
         sp_artist_image = ""
