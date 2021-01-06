@@ -40,5 +40,6 @@ bot.load_extension("cogs.sunmutsis")
 bot.load_extension("cogs.unsetusername")
 bot.load_extension("cogs.usertopartists")
 bot.load_extension("cogs.usertoptags")
+bot.load_extension("cogs.whoknows")
 
 bot.run(TOKEN)
