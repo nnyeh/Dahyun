@@ -1,4 +1,5 @@
 import os
+import pytz
 import random
 import discord
 import requests
@@ -228,7 +229,8 @@ class usertoptags(commands.Cog):
         no_duplicates = set(all_artist_tags)
         all_artist_tags_string = " • ".join(no_duplicates)
 
-        now = datetime.now()
+        cet = pytz.timezone("CET")
+        now = datetime.now(cet)
         timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
         
         embed = discord.Embed(

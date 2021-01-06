@@ -1,4 +1,5 @@
 import os
+import pytz
 import discord
 import requests
 from discord.ext import commands
@@ -21,7 +22,8 @@ class albumcover(commands.Cog):
         if not lastfm_username:
             return await ctx.send(f"`You need to first set your Last.fm username with the command`\n```>set [your username]```")
 
-        now = datetime.now()
+        cet = pytz.timezone("CET")
+        now = datetime.now(cet)
         timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
 
         if arg is None:
@@ -87,7 +89,7 @@ class albumcover(commands.Cog):
         )
 
         embed.set_image(url=f"{album_cover}")
-        embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
+        embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
 
         await ctx.send(embed=embed)
 

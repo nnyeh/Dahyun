@@ -1,4 +1,5 @@
 import os
+import pytz
 import discord
 import requests
 from discord.ext import commands
@@ -78,7 +79,8 @@ class combo(commands.Cog):
         first_artist_album = first_artist_obj["album"]["#text"]
         first_artist_track = first_artist_obj["name"]
         
-        now = datetime.now()
+        cet = pytz.timezone("CET")
+        now = datetime.now(cet)
         timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
 
         artist_combo = 0
@@ -126,7 +128,7 @@ class combo(commands.Cog):
         )
 
         embed.set_author(name=f"Active Combo for {lastfm_username}", icon_url=pfp)
-        embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
+        embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
         await ctx.send(embed=embed)
 
 

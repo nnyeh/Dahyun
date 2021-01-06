@@ -1,9 +1,11 @@
 import os
+import pytz
 import discord
 import requests
 from discord.ext import commands
 from data import database as db
 from datetime import datetime
+from pytz import timezone
 
 class usertopartists(commands.Cog):
     def __init__(self, bot):
@@ -59,7 +61,8 @@ class usertopartists(commands.Cog):
         top_artists_names = [name["name"] for name in tadata["topartists"]["artist"]]
         top_artists_string = "\n".join(top_artists_names)
 
-        now = datetime.now()
+        cet = pytz.timezone("CET")
+        now = datetime.now(cet)
         timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
         
         embed = discord.Embed(
