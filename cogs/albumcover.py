@@ -51,7 +51,13 @@ class albumcover(commands.Cog):
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
             abidata = r.json()
         else:
-            artist, album = arg.split("|")
+            try:
+                artist, album = arg.split("|")
+            except:
+                return await ctx.send(embed = discord.Embed(
+                description = "Use `|` to separate the artist and the album.",
+                colour = 0x4a5fc3
+                ))
             album_info_params = {
                 "artist": artist.strip(),
                 "album": album.strip(),
@@ -84,8 +90,6 @@ class albumcover(commands.Cog):
         embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
 
         await ctx.send(embed=embed)
-
-        
 
 def setup(bot):
     bot.add_cog(albumcover(bot))
