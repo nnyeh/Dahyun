@@ -34,8 +34,6 @@ class getspotifylink(commands.Cog):
             rtdata = r.json()
             rtinfo = rtdata["recenttracks"]["track"][0]
             track = rtinfo["name"]
-            print(track)
-            print("-----------")
             artist = rtinfo["artist"]["#text"]
 
             np = "@attr" in rtinfo and "nowplaying" in rtinfo["@attr"]
@@ -55,8 +53,7 @@ class getspotifylink(commands.Cog):
                 if lfm_artist_name_lowercase == sp_artist_name_lowercase:
                     sp_track_url = sp_track["external_urls"]["spotify"]
                     break
-            
-            print("------------------------")
+
         else:
             sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
             results = sp.search(arg, type="track", limit=1)
