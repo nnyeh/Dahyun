@@ -122,6 +122,5 @@ class whoknows(commands.Cog):
         embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
         await ctx.send(embed=embed)
 
-
 def setup(bot):
     bot.add_cog(whoknows(bot))
