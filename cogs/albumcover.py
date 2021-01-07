@@ -72,23 +72,26 @@ class albumcover(commands.Cog):
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
             abidata = r.json()
 
+        actual_artist = ""
+        actual_album = ""
+        album_url = ""
+        album_cover = ""
         try:
             actual_artist = abidata["album"]["artist"]
             actual_album = abidata["album"]["name"]
             album_url = abidata["album"]["url"]
             album_cover = abidata["album"]["image"][-1]["#text"]
         except KeyError:
-            return await ctx.send(embed = discord.Embed(
-            description = "No cover was found for this album.",
-            colour = 0x4a5fc3
-        ))
+            embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**\n*No cover exists for this album.*", colour = 0x4a5fc3)
+            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
+            return await ctx.send(embed=embed)
 
-        embed = discord.Embed(
-        description = f"**{actual_artist} - [{actual_album}]({album_url})**",
-        colour = 0x4a5fc3
-        )
-
-        embed.set_image(url=f"{album_cover}")
+        if album_cover == "":
+            embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**\n*No cover exists for this album.*", colour = 0x4a5fc3)
+            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
+        else:
+            embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**", colour = 0x4a5fc3)
+            embed.set_image(url=f"{album_cover}")
         embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
 
         await ctx.send(embed=embed)
