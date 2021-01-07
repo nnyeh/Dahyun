@@ -103,14 +103,17 @@ class whoknows(commands.Cog):
             else:
                 listeners_list[f"[{next_name}]({lastfm_username_url})"] = int(f"{listens}")
         listeners_list_sorted = dict(sorted(listeners_list.items(), key=lambda item: item[1], reverse=True))
-        listeners_string = "\n".join([f"**{next_name}** - **{listens}** plays" for next_name, listens in listeners_list_sorted.items()])
-        if listeners_string == "":
-            listeners_string = f"No one in this server has listened to this artist."
+        listeners_ranked = ""
+        for position, (name, listens) in enumerate(listeners_list_sorted.items(), start=1):
+            listeners_ranked += (str(position) + ". " + name + " - **" + str(listens) + "** plays" + "\n")
+        
+        if listeners_ranked == "":
+            listeners_ranked = f"*No one in this server has listened to this artist.*"
         
         embed = discord.Embed(
         url = artist_url,
         title = f"Who knows {artistname} in {ctx.guild.name}",
-        description = f"{listeners_string}",
+        description = f"{listeners_ranked}",
         colour = 0x4a5fc3
         )
         
