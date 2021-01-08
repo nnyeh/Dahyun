@@ -16,8 +16,8 @@ class whoknows(commands.Cog):
 
     @commands.command(aliases=["wk"])
     async def whoknows(self, ctx, *, arg=None):
-        
         async with ctx.typing():
+
             if arg is None:
                 username = db.get_user(ctx.author.id)
 
