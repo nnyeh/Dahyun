@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 from discord.ext.commands import CommandNotFound
 
-bot = commands.Bot(">")
+bot = commands.Bot(">", case_insensitive=True)
 
 @bot.event
 async def on_ready():
