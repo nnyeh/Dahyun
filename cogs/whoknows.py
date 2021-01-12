@@ -1,5 +1,6 @@
 import os
 import pytz
+import asyncio
 import spotipy
 import discord
 import requests
@@ -95,6 +96,7 @@ class whoknows(commands.Cog):
                 aidata = r.json()
                 lastfm_username = f"{next_name}"
                 lastfm_username_url = f"https://www.last.fm/user/{lastfm_username}"
+                await asyncio.sleep(0.25)
                 try:
                     listens = int(aidata["artist"]["stats"]["userplaycount"])
                 except (KeyError, TypeError):
