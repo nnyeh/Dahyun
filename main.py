@@ -9,7 +9,7 @@ bot = commands.Bot(">")
 @bot.event
 async def on_ready():
     print("Online")
-    return await bot.change_presence(activity=discord.Activity(type=1))
+    return await bot.change_presence(activity=discord.Game("SMITE"))
 
 @bot.event
 async def on_command_error(ctx, error):
