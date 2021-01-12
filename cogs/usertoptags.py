@@ -1,11 +1,11 @@
 import os
-import pytz
 import random
+import asyncio
 import discord
 import requests
 from discord.ext import commands
 from data import database as db
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class usertoptags(commands.Cog):
     def __init__(self, bot):
@@ -89,6 +89,7 @@ class usertoptags(commands.Cog):
                 first_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 first_artist_tags = [""]
+            await asyncio.sleep(0.20)
 
             artist_info_params = {
                 "artist": second_top_artist,
@@ -104,6 +105,7 @@ class usertoptags(commands.Cog):
                 second_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 second_artist_tags = [""]
+            await asyncio.sleep(0.20)
 
             artist_info_params = {
                 "artist": third_top_artist,
@@ -119,6 +121,7 @@ class usertoptags(commands.Cog):
                 third_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 third_artist_tags = [""]
+            await asyncio.sleep(0.20)
 
             artist_info_params = {
                 "artist": fourth_top_artist,
@@ -134,6 +137,7 @@ class usertoptags(commands.Cog):
                 fourth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 fourth_artist_tags = [""]
+            await asyncio.sleep(0.20)
 
             artist_info_params = {
                 "artist": fifth_top_artist,
@@ -149,6 +153,7 @@ class usertoptags(commands.Cog):
                 fifth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 fifth_artist_tags = [""]
+            await asyncio.sleep(0.20)
 
             artist_info_params = {
                 "artist": sixth_top_artist,
@@ -164,6 +169,7 @@ class usertoptags(commands.Cog):
                 sixth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 sixth_artist_tags = [""]
+            await asyncio.sleep(0.20)
 
             artist_info_params = {
                 "artist": seventh_top_artist,
@@ -179,6 +185,7 @@ class usertoptags(commands.Cog):
                 seventh_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 seventh_artist_tags = [""]
+            await asyncio.sleep(0.20)
 
             artist_info_params = {
                 "artist": eighth_top_artist,
@@ -194,6 +201,7 @@ class usertoptags(commands.Cog):
                 eighth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 eighth_artist_tags = [""]
+            await asyncio.sleep(0.20)
 
             artist_info_params = {
                 "artist": ninth_top_artist,
@@ -209,6 +217,7 @@ class usertoptags(commands.Cog):
                 ninth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 ninth_artist_tags = [""]
+            await asyncio.sleep(0.20)
 
             artist_info_params = {
                 "artist": tenth_top_artist,
@@ -224,23 +233,21 @@ class usertoptags(commands.Cog):
                 tenth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 tenth_artist_tags = [""]
+            await asyncio.sleep(0.20)
 
             all_artist_tags = first_artist_tags + second_artist_tags + third_artist_tags + fourth_artist_tags + fifth_artist_tags + sixth_artist_tags + seventh_artist_tags + eighth_artist_tags + ninth_artist_tags + tenth_artist_tags
             random.shuffle(all_artist_tags)
             no_duplicates = set(all_artist_tags)
             all_artist_tags_string = " • ".join(no_duplicates)
-
-            cet = pytz.timezone("CET")
-            now = datetime.now(cet)
-            timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
             
             embed = discord.Embed(
                 description = f"{all_artist_tags_string.lower()}",
+                timestamp = datetime.now() - timedelta(hours=2),
                 colour = 0x4a5fc3
             )
 
             embed.set_author(name=f"Top tags {timeframe} for {lastfm_username}", icon_url=pfp)
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
+            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
 
         await ctx.send(embed=embed)
 

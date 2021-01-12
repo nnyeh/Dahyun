@@ -1,10 +1,9 @@
 import os
-import pytz
 import discord
 import requests
 from discord.ext import commands
 from data import database as db
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class albumcover(commands.Cog):
     def __init__(self, bot):
@@ -22,10 +21,6 @@ class albumcover(commands.Cog):
             lastfm_username = username [0][1];
             if not lastfm_username:
                 return await ctx.send(f"`You need to first set your Last.fm username with the command`\n```>set [your username]```")
-
-            cet = pytz.timezone("CET")
-            now = datetime.now(cet)
-            timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
 
             if arg is None:
                 recent_tracks_params = {
@@ -83,17 +78,17 @@ class albumcover(commands.Cog):
                 album_url = abidata["album"]["url"]
                 album_cover = abidata["album"]["image"][-1]["#text"]
             except KeyError:
-                embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**\n*No cover exists for this album.*", colour = 0x4a5fc3)
-                embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
+                embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**\n*No cover exists for this album.*", timestamp = datetime.now() - timedelta(hours=2), colour = 0x4a5fc3)
+                embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
                 return await ctx.send(embed=embed)
 
             if album_cover == "":
-                embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**\n*No cover exists for this album.*", colour = 0x4a5fc3)
-                embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
+                embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**\n*No cover exists for this album.*", timestamp = datetime.now() - timedelta(hours=2), colour = 0x4a5fc3)
+                embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
             else:
-                embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**", colour = 0x4a5fc3)
+                embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**", timestamp = datetime.now() - timedelta(hours=2), colour = 0x4a5fc3)
                 embed.set_image(url=f"{album_cover}")
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
+            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
 
         await ctx.send(embed=embed)
 

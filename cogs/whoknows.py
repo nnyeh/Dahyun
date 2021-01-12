@@ -1,14 +1,13 @@
 import os
-import pytz
-import asyncio
 import spotipy
+import asyncio
 import discord
 import requests
 import itertools
 from discord.ext import commands
 from data import database as db
 from spotipy.oauth2 import SpotifyClientCredentials
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class whoknows(commands.Cog):
@@ -65,10 +64,6 @@ class whoknows(commands.Cog):
                 artistname = aidata["artist"]["name"]
                 artist_url = aidata["artist"]["url"]
 
-            cet = pytz.timezone("CET")
-            now = datetime.now(cet)
-            timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
-
             sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
             sp_artist_image = ""
             results = sp.search(artistname, type="artist", limit=20)
@@ -96,7 +91,7 @@ class whoknows(commands.Cog):
                 aidata = r.json()
                 lastfm_username = f"{next_name}"
                 lastfm_username_url = f"https://www.last.fm/user/{lastfm_username}"
-                await asyncio.sleep(0.25)
+                await asyncio.sleep(0.20)
                 try:
                     listens = int(aidata["artist"]["stats"]["userplaycount"])
                 except (KeyError, TypeError):
@@ -112,17 +107,18 @@ class whoknows(commands.Cog):
         
             if listeners_ranked == "":
                 listeners_ranked = f"*No one in this server has listened to this artist.*"
-        
+
             embed = discord.Embed(
             url = artist_url,
             title = f"Who knows {artistname} in {ctx.guild.name}",
             description = f"{listeners_ranked}",
+            timestamp = datetime.now() - timedelta(hours=2),
             colour = 0x4a5fc3
             )
         
             if sp_artist_image is not None:
                 embed.set_thumbnail(url=f"{sp_artist_image}")
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
+            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
         await ctx.send(embed=embed)
 
 def setup(bot):

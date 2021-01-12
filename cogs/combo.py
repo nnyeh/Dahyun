@@ -1,10 +1,9 @@
 import os
-import pytz
 import discord
 import requests
 from discord.ext import commands
 from data import database as db
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class combo(commands.Cog):
     def __init__(self, bot):
@@ -79,10 +78,6 @@ class combo(commands.Cog):
             first_artist_name = first_artist_obj["artist"]["#text"]
             first_artist_album = first_artist_obj["album"]["#text"]
             first_artist_track = first_artist_obj["name"]
-            
-            cet = pytz.timezone("CET")
-            now = datetime.now(cet)
-            timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
 
             artist_combo = 0
             album_combo = 0
@@ -125,11 +120,12 @@ class combo(commands.Cog):
 
             embed = discord.Embed(
             description = f"{no_combo_text}{artist_combo_text}{album_combo_text}{track_combo_text}",
+            timestamp = datetime.now() - timedelta(hours=2),
             colour = 0x4a5fc3
             )
 
             embed.set_author(name=f"Active Combo for {lastfm_username}", icon_url=pfp)
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
+            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
 
         await ctx.send(embed=embed)
 

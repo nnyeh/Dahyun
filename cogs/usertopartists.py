@@ -1,11 +1,9 @@
 import os
-import pytz
 import discord
 import requests
 from discord.ext import commands
 from data import database as db
-from datetime import datetime
-from pytz import timezone
+from datetime import datetime, timedelta
 
 class usertopartists(commands.Cog):
     def __init__(self, bot):
@@ -65,18 +63,15 @@ class usertopartists(commands.Cog):
             tadata = r.json()
             top_artists_names = [name["name"] for name in tadata["topartists"]["artist"]]
             top_artists_string = "\n".join(top_artists_names)
-
-            cet = pytz.timezone("CET")
-            now = datetime.now(cet)
-            timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
             
             embed = discord.Embed(
                 description = f"**{top_artists_string}**",
+                timestamp = datetime.now() - timedelta(hours=2),
                 colour = 0x4a5fc3
             )
 
             embed.set_author(name=f"Top artists {timeframe} for {lastfm_username}", icon_url=pfp)
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp}")
+            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
 
         await ctx.send(embed=embed)
 

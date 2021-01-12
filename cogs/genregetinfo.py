@@ -1,10 +1,9 @@
 import os
-import pytz
 import discord
 import requests
 from discord.ext import commands
 from data import database as db
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class genregetinfo(commands.Cog):
     def __init__(self, bot):
@@ -48,17 +47,13 @@ class genregetinfo(commands.Cog):
             if len(genre_info)>800:
                 genre_info = genre_info[:800] + "..."
 
-            cet = pytz.timezone("CET")
-            now = datetime.now(cet)
-            timestamp = now.strftime("%#H:%M:%S, %#d.%#m.%Y")
-
             if genre_info == "":
-                embed = discord.Embed(description = f"*No info has been given about this genre.*", colour = 0x4a5fc3)
+                embed = discord.Embed(description = f"*No info has been given about this genre.*", timestamp = datetime.now() - timedelta(hours=2), colour = 0x4a5fc3)
             else:
-                embed = discord.Embed(description = f"{genre_info}", colour = 0x4a5fc3)
+                embed = discord.Embed(description = f"{genre_info}", timestamp = datetime.now() - timedelta(hours=2), colour = 0x4a5fc3)
 
             embed.set_author(name=f"Genre info for {lastfm_username} about {genre_name}")
-            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator} • {timestamp} CET")
+            embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
 
         await ctx.send(embed=embed)
 
