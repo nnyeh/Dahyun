@@ -14,7 +14,8 @@ class help(commands.Cog):
             colour = 0x4a5fc3
         )
 
-        embed.add_field(name=f"**>albumcover** or **>co**", value=f"Returns the album cover.", inline=False)
+        embed.add_field(name=f"**>albumcover** or **>co**", value=f"Returns the album cover from Last.fm.", inline=False)
+        embed.add_field(name=f"**>albumcoverspotify** or **>sco**", value=f"Returns the album cover from Spotify.", inline=False)
         embed.add_field(name=f"**>albuminfo** or **>abi**", value=f"Returns the album info.", inline=False)
         embed.add_field(name=f"**>artistinfo** or **>ai**", value=f"Returns the artist info.", inline=False)
         embed.add_field(name=f"**>combo**", value=f"Displays the amount of plays of the same artist, album or song.", inline=False)
@@ -27,6 +28,7 @@ class help(commands.Cog):
         embed.add_field(name=f"**>set** and **>unset**", value=f"Sets and unsets your username.", inline=False)
         embed.add_field(name=f"**>topartists** or **>ta**", value=f"Returns the top artists of the specified timeframe.", inline=False)
         embed.add_field(name=f"**>toptags** or **>tt**", value=f"Returns the top tags of the specified timeframe.", inline=False)
+        embed.add_field(name=f"**>whoknows** or **>wk**", value=f"Returns the users who have listened to the artist.", inline=False)
 
         await ctx.author.send(embed=embed)
 
