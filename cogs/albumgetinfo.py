@@ -48,11 +48,6 @@ class albumgetinfo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
                 abidata = r.json()
-                album_url = abidata["album"]["url"]
-                album_info = abidata["album"]["wiki"]["content"]
-                album_tags = [tag["name"] for tag in abidata["album"]["tags"]["tag"]]
-                album_tags_string = " • ".join(album_tags)
-
             else:
                 artist, album = arg.split("|")
                 params = {
@@ -65,19 +60,22 @@ class albumgetinfo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=params)
                 abidata = r.json()
-                try:
-                    actual_artist = abidata["album"]["artist"]
-                except KeyError:
-                    return await ctx.send(embed = discord.Embed(
-                        description = f"This artist's album doesn't exist.",
-                        colour = 0x4a5fc3
-                        ))
-                actual_album = abidata["album"]["name"]
+
+            try:
+                actual_artist = abidata["album"]["artist"]
+            except KeyError:
+                return await ctx.send(embed = discord.Embed(description = f"This artist's album doesn't exist.", colour = 0x4a5fc3))
+            try:
                 album_info = abidata["album"]["wiki"]["content"]
-                album_url = abidata["album"]["url"]
-                album_cover = abidata["album"]["image"][-1]["#text"]
-                album_tags = [tag["name"] for tag in abidata["album"]["tags"]["tag"]]
-                album_tags_string = " • ".join(album_tags)
+            except KeyError:
+                album_info = ""
+
+
+            actual_album = abidata["album"]["name"]
+            album_url = abidata["album"]["url"]
+            album_cover = abidata["album"]["image"][-1]["#text"]
+            album_tags = [tag["name"] for tag in abidata["album"]["tags"]["tag"]]
+            album_tags_string = " • ".join(album_tags)
 
             album_info = album_info.strip()
             sep = "<a"
