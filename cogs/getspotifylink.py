@@ -42,15 +42,13 @@ class getspotifylink(commands.Cog):
 
                 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
                 sp_track_url = ""
-                results = sp.search(f"{track} {artist}", type="track", limit=50)
+                results = sp.search(f"{track} {artist}", type="track", limit=20)
                 items = results["tracks"]["items"]
                 lfm_artist_name_lowercase = f"{artist.lower()}"
 
                 for sp_track in items:
                     sp_track_correct = sp_track["artists"][0]
                     sp_artist_name_lowercase = sp_track_correct["name"].lower()
-                    print(sp_artist_name_lowercase)
-                    print(lfm_artist_name_lowercase)
                     if lfm_artist_name_lowercase == sp_artist_name_lowercase:
                         sp_track_url = sp_track["external_urls"]["spotify"]
                         break
