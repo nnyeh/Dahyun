@@ -1,4 +1,5 @@
 import os
+import asyncio
 import requests
 from discord.ext import commands
 from data import database as db
@@ -31,6 +32,7 @@ class getyoutubelink(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
+                await asyncio.sleep(0.25)
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist = rtinfo["artist"]["#text"]
                 track = rtinfo["name"]
@@ -59,6 +61,7 @@ class getyoutubelink(commands.Cog):
 
                 r = requests.get("https://www.googleapis.com/youtube/v3/search", params=video_info_params)
                 vidata = r.json()
+                await asyncio.sleep(0.25)
 
                 state = f"*Link requested by {ctx.author.name}#{ctx.author.discriminator}*"
 

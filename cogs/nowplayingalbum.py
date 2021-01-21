@@ -1,4 +1,5 @@
 import os
+import asyncio
 import discord
 import requests
 from discord.ext import commands
@@ -39,6 +40,7 @@ class nowplayingalbum(commands.Cog):
 
             r1 = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
             rtdata = r1.json()
+            await asyncio.sleep(0.25)
 
             rtinfo = rtdata["recenttracks"]["track"][0]
             artist = rtinfo["artist"]["#text"]
@@ -61,6 +63,7 @@ class nowplayingalbum(commands.Cog):
 
             r2 = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
             aidata = r2.json()
+            await asyncio.sleep(0.25)
             try:
                 artist_playcount = aidata["artist"]["stats"]["userplaycount"]
             except KeyError:
@@ -80,6 +83,7 @@ class nowplayingalbum(commands.Cog):
 
             r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
             abidata = r3.json()
+            await asyncio.sleep(0.25)
             try:
                 album_url = abidata["album"]["url"]
             except KeyError:

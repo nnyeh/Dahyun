@@ -1,4 +1,5 @@
 import os
+import asyncio
 import discord
 import requests
 from discord.ext import commands
@@ -61,6 +62,7 @@ class usertopartists(commands.Cog):
 
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=top_artists_params)
             tadata = r.json()
+            await asyncio.sleep(0.25)
             top_artists_names = [name["name"] for name in tadata["topartists"]["artist"]]
             top_artists_string = "\n".join(top_artists_names)
             

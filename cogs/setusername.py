@@ -1,4 +1,5 @@
 import os
+import asyncio
 import requests
 from discord.ext import commands
 from data import database as db
@@ -18,6 +19,7 @@ class setusername(commands.Cog):
 
         r = requests.get("http://ws.audioscrobbler.com/2.0/", params=params)
         data = r.json()
+        await asyncio.sleep(0.25)
         try:
             username = data["user"]["name"]
         except KeyError:

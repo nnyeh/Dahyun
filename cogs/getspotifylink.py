@@ -1,4 +1,5 @@
 import os
+import asyncio
 import spotipy
 import requests
 from discord.ext import commands
@@ -33,6 +34,7 @@ class getspotifylink(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
+                await asyncio.sleep(0.25)
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 track = rtinfo["name"]
                 artist = rtinfo["artist"]["#text"]

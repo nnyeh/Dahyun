@@ -36,7 +36,7 @@ class albumcover(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
-                await asyncio.sleep(0.20)
+                await asyncio.sleep(0.25)
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist = rtinfo["artist"]["#text"]
                 album = rtinfo["album"]["#text"]
@@ -71,7 +71,7 @@ class albumcover(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
                 abidata = r.json()
-                await asyncio.sleep(0.20)
+                await asyncio.sleep(0.25)
 
             actual_artist = ""
             actual_album = ""
@@ -121,7 +121,7 @@ class albumcover(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
-                await asyncio.sleep(0.20)
+                await asyncio.sleep(0.25)
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist = rtinfo["artist"]["#text"]
                 album = rtinfo["album"]["#text"]   
@@ -137,7 +137,7 @@ class albumcover(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
                 abidata = r.json()
-                await asyncio.sleep(0.20)
+                await asyncio.sleep(0.25)
             else:
                 try:
                     artist, album = arg.split("|")
@@ -158,7 +158,7 @@ class albumcover(commands.Cog):
 
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
             abidata = r.json()
-            await asyncio.sleep(0.20)
+            await asyncio.sleep(0.25)
             try:
                 actual_artist = abidata["album"]["artist"]
                 actual_album = abidata["album"]["name"]

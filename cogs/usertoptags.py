@@ -63,6 +63,7 @@ class usertoptags(commands.Cog):
 
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=top_artists_params)
             tadata = r.json()
+            await asyncio.sleep(0.25)
             top_artists_names = [name["name"] for name in tadata["topartists"]["artist"]]
             first_top_artist = top_artists_names [0];
             second_top_artist = top_artists_names [1];
@@ -89,7 +90,7 @@ class usertoptags(commands.Cog):
                 first_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 first_artist_tags = [""]
-            await asyncio.sleep(0.20)
+            await asyncio.sleep(0.25)
 
             artist_info_params = {
                 "artist": second_top_artist,
@@ -105,7 +106,7 @@ class usertoptags(commands.Cog):
                 second_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 second_artist_tags = [""]
-            await asyncio.sleep(0.20)
+            await asyncio.sleep(0.25)
 
             artist_info_params = {
                 "artist": third_top_artist,
@@ -121,7 +122,7 @@ class usertoptags(commands.Cog):
                 third_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 third_artist_tags = [""]
-            await asyncio.sleep(0.20)
+            await asyncio.sleep(0.25)
 
             artist_info_params = {
                 "artist": fourth_top_artist,
@@ -137,7 +138,7 @@ class usertoptags(commands.Cog):
                 fourth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 fourth_artist_tags = [""]
-            await asyncio.sleep(0.20)
+            await asyncio.sleep(0.25)
 
             artist_info_params = {
                 "artist": fifth_top_artist,
@@ -153,7 +154,7 @@ class usertoptags(commands.Cog):
                 fifth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 fifth_artist_tags = [""]
-            await asyncio.sleep(0.20)
+            await asyncio.sleep(0.25)
 
             artist_info_params = {
                 "artist": sixth_top_artist,
@@ -169,7 +170,7 @@ class usertoptags(commands.Cog):
                 sixth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 sixth_artist_tags = [""]
-            await asyncio.sleep(0.20)
+            await asyncio.sleep(0.25)
 
             artist_info_params = {
                 "artist": seventh_top_artist,
@@ -185,7 +186,7 @@ class usertoptags(commands.Cog):
                 seventh_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 seventh_artist_tags = [""]
-            await asyncio.sleep(0.20)
+            await asyncio.sleep(0.25)
 
             artist_info_params = {
                 "artist": eighth_top_artist,
@@ -201,7 +202,7 @@ class usertoptags(commands.Cog):
                 eighth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 eighth_artist_tags = [""]
-            await asyncio.sleep(0.20)
+            await asyncio.sleep(0.25)
 
             artist_info_params = {
                 "artist": ninth_top_artist,
@@ -217,7 +218,7 @@ class usertoptags(commands.Cog):
                 ninth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 ninth_artist_tags = [""]
-            await asyncio.sleep(0.20)
+            await asyncio.sleep(0.25)
 
             artist_info_params = {
                 "artist": tenth_top_artist,
@@ -233,7 +234,7 @@ class usertoptags(commands.Cog):
                 tenth_artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
             except KeyError:
                 tenth_artist_tags = [""]
-            await asyncio.sleep(0.20)
+            await asyncio.sleep(0.25)
 
             all_artist_tags = first_artist_tags + second_artist_tags + third_artist_tags + fourth_artist_tags + fifth_artist_tags + sixth_artist_tags + seventh_artist_tags + eighth_artist_tags + ninth_artist_tags + tenth_artist_tags
             random.shuffle(all_artist_tags)

@@ -1,4 +1,5 @@
 import os
+import asyncio
 import discord
 import requests
 from discord.ext import commands
@@ -32,6 +33,7 @@ class albumgetinfo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
+                await asyncio.sleep(0.25)
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 album_cover = rtinfo["image"][-1]["#text"]
                 actual_artist = rtinfo["artist"]["#text"]
@@ -60,6 +62,7 @@ class albumgetinfo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=params)
                 abidata = r.json()
+                await asyncio.sleep(0.25)
 
             try:
                 actual_artist = abidata["album"]["artist"]
