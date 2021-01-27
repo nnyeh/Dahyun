@@ -112,11 +112,11 @@ class combo(commands.Cog):
 
             if artist_combo >= 2:
                 artist_combo_text = f"**Artist:** {artist_combo} plays in a row - **[{artist_name}]({artist_url})**\n"
-            if album_url == "":
-                album_combo_text = ""
-            else:
-                if album_combo >= 2:
+            if album_combo >= 2 and album_url != "":
                     album_combo_text = f"**Album:** {album_combo} plays in a row - **[{album_name}]({album_url})**\n"
+            else:
+                if album_combo >= 2 and album_url == "":
+                    album_combo_text = f"**Album:** {album_combo} plays in a row - **{album_name}**\n"
             if track_combo >= 2:
                 track_combo_text = f"**Track:** {track_combo} plays in a row - **[{track_name}]({track_url})**"
             if artist_combo_text == "" and album_combo_text == "" and track_combo_text == "":
