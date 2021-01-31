@@ -83,42 +83,105 @@ class combo(commands.Cog):
             first_artist_album = first_artist_obj["album"]["#text"]
             first_artist_track = first_artist_obj["name"]
 
-            artist_combo = 0
-            album_combo = 0
-            track_combo = 0
+            first_artist_combo = -1
+            first_album_combo = -1
+            first_track_combo = -1
 
             for track in tracks: 
                 if (track["artist"]["#text"] == first_artist_name):
-                    artist_combo += 1
+                    first_artist_combo += 1
                 else:
                     break
 
             for track in tracks: 
                 if (track["album"]["#text"] == first_artist_album):
-                    album_combo += 1
+                    first_album_combo += 1
                 else:
                     break
 
             for track in tracks: 
                 if (track["name"] == first_artist_track):
-                    track_combo += 1
+                    first_track_combo += 1
                 else:
                     break
+
+            second_artist_combo = ""
+            second_album_combo = ""
+            second_track_combo = ""
+
+            if first_artist_combo or first_album_combo or first_track_combo >= 1000:
+                recent_tracks_params = {
+                "limit": "1000",
+                "page": "2",
+                "user": lastfm_username,
+                "api_key": os.getenv("LASTFM_API_KEY"),
+                "format": "json",
+                "method": "user.getRecentTracks"
+                }
+
+                r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
+                rtdata = r.json()
+                await asyncio.sleep(0.25)
+
+                rtinfo = rtdata["recenttracks"]["track"][0]
+                artist_name = rtinfo["artist"]["#text"]
+                album_name = rtinfo["album"]["#text"]
+                track_name = rtinfo["name"]
+
+                album_info_params = {
+                    "artist": artist_name,
+                    "album": album_name,
+                    "user": lastfm_username,
+                    "api_key": os.getenv("LASTFM_API_KEY"),
+                    "format": "json",
+                    "method": "album.getInfo"
+                }
+
+                r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
+                abidata = r3.json()
+                await asyncio.sleep(0.25)
+                tracks = rtdata["recenttracks"]["track"]
+                first_artist_obj = tracks[0]
+                first_artist_name = first_artist_obj["artist"]["#text"]
+                first_artist_album = first_artist_obj["album"]["#text"]
+                first_artist_track = first_artist_obj["name"]
+
+                second_artist_combo = 0
+                second_album_combo = 0
+                second_track_combo = 0
+
+                for track in tracks: 
+                    if (track["artist"]["#text"] == first_artist_name):
+                        second_artist_combo += 1
+                    else:
+                        break
+
+                for track in tracks: 
+                    if (track["album"]["#text"] == first_artist_album):
+                        second_album_combo += 1
+                    else:
+                        break
+
+                for track in tracks: 
+                    if (track["name"] == first_artist_track):
+                        second_track_combo += 1
+                    else:
+                        break
 
             artist_combo_text = ""
             album_combo_text = ""
             track_combo_text = ""
             no_combo_text = ""
 
-            if artist_combo >= 2:
-                artist_combo_text = f"**Artist:** {artist_combo} plays in a row - **[{artist_name}]({artist_url})**\n"
-            if album_combo >= 2 and album_url != "":
-                    album_combo_text = f"**Album:** {album_combo} plays in a row - **[{album_name}]({album_url})**\n"
+            if first_artist_combo >= 2:
+                artist_combo_text = f"**Artist:** {first_artist_combo + second_artist_combo} plays in a row - **[{artist_name}]({artist_url})**\n"
+            if first_album_combo >= 2 and album_url != "":
+                    album_combo_text = f"**Album:** {first_album_combo + second_album_combo} plays in a row - **[{album_name}]({album_url})**\n"
             else:
-                if album_combo >= 2 and album_url == "":
-                    album_combo_text = f"**Album:** {album_combo} plays in a row - **{album_name}**\n"
-            if track_combo >= 2:
-                track_combo_text = f"**Track:** {track_combo} plays in a row - **[{track_name}]({track_url})**"
+                if first_album_combo >= 2 and album_url == "":
+                    album_combo_text = f"**Album:** {first_album_combo + second_album_combo} plays in a row - **{album_name}**\n"
+            if first_track_combo >= 2:
+                track_combo_text = f"**Track:** {first_track_combo + second_track_combo} plays in a row - **[{track_name}]({track_url})**"
             if artist_combo_text == "" and album_combo_text == "" and track_combo_text == "":
                 no_combo_text = f"*No consecutive tracks found.*"
 
