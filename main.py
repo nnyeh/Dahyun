@@ -9,7 +9,7 @@ bot = commands.Bot(">", case_insensitive=True)
 @bot.event
 async def on_ready():
     print("Online")
-    return await bot.change_presence(activity=discord.Game("SMITE"))
+    return await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="music"))
 
 @bot.event
 async def on_command_error(ctx, error):
