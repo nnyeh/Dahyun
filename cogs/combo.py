@@ -234,19 +234,6 @@ class combo(commands.Cog):
             track_combo_text = ""
             no_combo_text = ""
 
-            print(first_artist_combo)
-            print(first_album_combo)
-            print(first_track_combo)
-            print("------------------")
-            print(second_artist_combo)
-            print(second_album_combo)
-            print(second_track_combo)
-            print("------------------")
-            print(third_artist_combo)
-            print(third_album_combo)
-            print(third_track_combo)
-            print("------------------")
-
             if first_artist_combo >= 2:
                 artist_combo_text = f"**Artist:** {first_artist_combo + second_artist_combo + third_artist_combo} plays in a row - **[{artist_name}]({artist_url})**\n"
             if first_album_combo >= 2 and album_url != "":
