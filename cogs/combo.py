@@ -45,8 +45,7 @@ class combo(commands.Cog):
             rtinfo = rtdata["recenttracks"]["track"][0]
             artist_name = rtinfo["artist"]["#text"]
             album_name = rtinfo["album"]["#text"]
-            track_name = rtinfo["name"]
-            track_url = rtinfo["url"]
+            first_track_url = rtinfo["url"]
 
             np = "@attr" in rtinfo and "nowplaying" in rtinfo["@attr"]
 
@@ -61,7 +60,7 @@ class combo(commands.Cog):
             r2 = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
             aidata = r2.json()
             await asyncio.sleep(0.25)
-            artist_url = aidata["artist"]["url"]
+            first_artist_url = aidata["artist"]["url"]
 
             album_info_params = {
                 "artist": artist_name,
@@ -76,9 +75,9 @@ class combo(commands.Cog):
             abidata = r3.json()
             await asyncio.sleep(0.25)
             try:
-                album_url = abidata["album"]["url"]
+                first_album_url = abidata["album"]["url"]
             except KeyError:
-                album_url = ""
+                first_album_url = ""
             tracks = rtdata["recenttracks"]["track"]
             first_artist_obj = tracks[0]
             first_artist_name = first_artist_obj["artist"]["#text"]
@@ -131,7 +130,6 @@ class combo(commands.Cog):
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist_name = rtinfo["artist"]["#text"]
                 album_name = rtinfo["album"]["#text"]
-                track_name = rtinfo["name"]
 
                 album_info_params = {
                     "artist": artist_name,
@@ -146,10 +144,6 @@ class combo(commands.Cog):
                 abidata = r3.json()
                 await asyncio.sleep(0.25)
                 tracks = rtdata["recenttracks"]["track"]
-                first_artist_obj = tracks[0]
-                first_artist_name = first_artist_obj["artist"]["#text"]
-                first_artist_album = first_artist_obj["album"]["#text"]
-                first_artist_track = first_artist_obj["name"]
 
                 if first_artist_combo == 1000:
                     for track in tracks: 
@@ -196,7 +190,6 @@ class combo(commands.Cog):
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist_name = rtinfo["artist"]["#text"]
                 album_name = rtinfo["album"]["#text"]
-                track_name = rtinfo["name"]
 
                 album_info_params = {
                     "artist": artist_name,
@@ -211,10 +204,6 @@ class combo(commands.Cog):
                 abidata = r3.json()
                 await asyncio.sleep(0.25)
                 tracks = rtdata["recenttracks"]["track"]
-                first_artist_obj = tracks[0]
-                first_artist_name = first_artist_obj["artist"]["#text"]
-                first_artist_album = first_artist_obj["album"]["#text"]
-                first_artist_track = first_artist_obj["name"]
 
                 if second_artist_combo == 1000:
                     for track in tracks: 
@@ -261,7 +250,6 @@ class combo(commands.Cog):
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist_name = rtinfo["artist"]["#text"]
                 album_name = rtinfo["album"]["#text"]
-                track_name = rtinfo["name"]
 
                 album_info_params = {
                     "artist": artist_name,
@@ -276,10 +264,6 @@ class combo(commands.Cog):
                 abidata = r3.json()
                 await asyncio.sleep(0.25)
                 tracks = rtdata["recenttracks"]["track"]
-                first_artist_obj = tracks[0]
-                first_artist_name = first_artist_obj["artist"]["#text"]
-                first_artist_album = first_artist_obj["album"]["#text"]
-                first_artist_track = first_artist_obj["name"]
 
                 if third_artist_combo == 1000:
                     for track in tracks: 
@@ -326,7 +310,6 @@ class combo(commands.Cog):
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist_name = rtinfo["artist"]["#text"]
                 album_name = rtinfo["album"]["#text"]
-                track_name = rtinfo["name"]
 
                 album_info_params = {
                     "artist": artist_name,
@@ -341,10 +324,6 @@ class combo(commands.Cog):
                 abidata = r3.json()
                 await asyncio.sleep(0.25)
                 tracks = rtdata["recenttracks"]["track"]
-                first_artist_obj = tracks[0]
-                first_artist_name = first_artist_obj["artist"]["#text"]
-                first_artist_album = first_artist_obj["album"]["#text"]
-                first_artist_track = first_artist_obj["name"]
 
                 if fourth_artist_combo == 1000:
                     for track in tracks: 
@@ -381,15 +360,15 @@ class combo(commands.Cog):
             album_combo = add_album_combos if not np else (add_album_combos - 1)
             track_combo = add_track_combos if not np else (add_track_combos - 1)
 
-            if first_artist_combo >= 2:
-                artist_combo_text = f"**Artist:** {artist_combo} plays in a row - **[{artist_name}]({artist_url})**\n"
-            if first_album_combo >= 2 and album_url != "":
-                    album_combo_text = f"**Album:** {album_combo} plays in a row - **[{album_name}]({album_url})**\n"
+            if artist_combo >= 2:
+                artist_combo_text = f"**Artist:** {artist_combo} plays in a row - **[{first_artist_name}]({first_artist_url})**\n"
+            if album_combo >= 2 and first_album_url != "":
+                    album_combo_text = f"**Album:** {album_combo} plays in a row - **[{first_artist_album}]({first_album_url})**\n"
             else:
-                if first_album_combo >= 2 and album_url == "":
-                    album_combo_text = f"**Album:** {album_combo} plays in a row - **{album_name}**\n"
-            if first_track_combo >= 2:
-                track_combo_text = f"**Track:** {track_combo} plays in a row - **[{track_name}]({track_url})**"
+                if album_combo >= 2 and first_album_url == "":
+                    album_combo_text = f"**Album:** {album_combo} plays in a row - **{first_artist_album}**\n"
+            if track_combo >= 2:
+                track_combo_text = f"**Track:** {track_combo} plays in a row - **[{first_artist_track}]({first_track_url})**"
             if artist_combo_text == "" and album_combo_text == "" and track_combo_text == "":
                 no_combo_text = f"*No consecutive tracks found.*"
 
