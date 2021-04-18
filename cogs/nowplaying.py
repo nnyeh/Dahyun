@@ -40,7 +40,6 @@ class nowplaying(commands.Cog):
 
             r1 = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
             rtdata = r1.json()
-            await asyncio.sleep(0.25)
 
             rtinfo = rtdata["recenttracks"]["track"][0]
             artist = rtinfo["artist"]["#text"]
@@ -49,6 +48,24 @@ class nowplaying(commands.Cog):
             image = rtinfo["image"][-1]["#text"]
             total_playcount = rtdata["recenttracks"]["@attr"]["total"]
             track_url = rtinfo["url"]
+
+            track_info_params = {
+                "track": track,
+                "artist": artist,
+                "user": lastfm_username,
+                "api_key": os.getenv("LASTFM_API_KEY"),
+                "format": "json",
+                "method": "track.getInfo"
+            }
+
+            r2 = requests.get("http://ws.audioscrobbler.com/2.0/", params=track_info_params)
+            rtdata = r2.json()
+            
+            loved = rtdata["track"]["userloved"]
+            if loved is "1":
+                loved = "❤️ "
+            else:
+                loved = ""
 
             np = "@attr" in rtinfo and "nowplaying" in rtinfo["@attr"]
             state = "Now playing for" if np else "Last scrobbled track for"
@@ -61,9 +78,8 @@ class nowplaying(commands.Cog):
                 "method": "artist.getInfo"
             }
 
-            r2 = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
-            aidata = r2.json()
-            await asyncio.sleep(0.25)
+            r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
+            aidata = r3.json()
             try:
                 artist_playcount = aidata["artist"]["stats"]["userplaycount"]
             except KeyError:
@@ -81,9 +97,8 @@ class nowplaying(commands.Cog):
                 "method": "album.getInfo"
             }
 
-            r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
-            abidata = r3.json()
-            await asyncio.sleep(0.25)
+            r4 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
+            abidata = r4.json()
             try:
                 album_url = abidata["album"]["url"]
             except KeyError:
@@ -98,8 +113,8 @@ class nowplaying(commands.Cog):
                 "method": "track.getInfo"
             }
 
-            r4 = requests.get("http://ws.audioscrobbler.com/2.0/", params=track_info_params)
-            trackdata = r4.json()
+            r5 = requests.get("http://ws.audioscrobbler.com/2.0/", params=track_info_params)
+            trackdata = r5.json()
             try:
                 track_scrobbles = trackdata["track"]["userplaycount"] + " track scrobbles"
             except KeyError:
@@ -118,7 +133,7 @@ class nowplaying(commands.Cog):
                 description = f"By **[{artist}]({artist_url})** from **[{album}]({album_url})**",
                 colour = 0x4a5fc3)
 
-        embed.set_author(name=f"{state} {lastfm_username}", icon_url=pfp)
+        embed.set_author(name=f"{loved}{state} {lastfm_username}", icon_url=pfp)
         embed.set_thumbnail(url=image)
         embed.set_footer(text=f"{artist_tags_string.lower()}\n{track_scrobbles} • {artist_playcount} {artist} scrobbles • {total_playcount} total scrobbles")
 
