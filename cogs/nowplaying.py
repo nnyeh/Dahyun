@@ -1,10 +1,8 @@
 import os
 import discord
-import asyncio
 import requests
 from discord.ext import commands
 from data import database as db
-from aiohttp import connector
 
 class nowplaying(commands.Cog):
     def __init__(self, bot):
@@ -104,8 +102,10 @@ class nowplaying(commands.Cog):
             abidata = r4.json()
             try:
                 album_url = abidata["album"]["url"]
+                album_scrobbles = abidata["album"]["userplaycount"] + " album scrobbles"
             except KeyError:
                 album_url = ""
+                album_scrobbles = "No data on Last.fm"
 
             track_info_params = {
                 "track": track,
@@ -123,6 +123,11 @@ class nowplaying(commands.Cog):
             except KeyError:
                 track_scrobbles = "No data on Last.fm"
 
+        try:
+            artist_scrobbles = f"{artist_playcount} {artist} scrobbles"
+        except KeyError:
+            artist_scrobbles = "No data on Last.fm"
+
         if album == "":
             embed = discord.Embed(
                 url = track_url,
@@ -136,14 +141,11 @@ class nowplaying(commands.Cog):
                 description = f"By **[{artist}]({artist_url})** from **[{album}]({album_url})**",
                 colour = 0x4a5fc3)
 
-        embed.set_author(name=f"{loved}{state} {lastfm_username}", icon_url=pfp)
+        embed.set_author(name=f"{loved}{state} {lastfm_username}", url=f"https://www.last.fm/user/{lastfm_username}", icon_url=pfp)
         embed.set_thumbnail(url=image)
-        embed.set_footer(text=f"{artist_tags_string.lower()}\n{track_scrobbles} • {artist_playcount} {artist} scrobbles • {total_playcount} total scrobbles")
+        embed.set_footer(text=f"{artist_tags_string.lower()}\n{track_scrobbles} • {artist_scrobbles}\n{album_scrobbles} • {total_playcount} total scrobbles")
 
-        try:
-            await ctx.send(embed=embed)
-        except connector.ClientConnectorError:
-            await ctx.send(f"`Something went wrong! Try again.`")
+        await ctx.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(nowplaying(bot))
