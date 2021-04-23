@@ -61,10 +61,13 @@ class nowplaying(commands.Cog):
             r2 = requests.get("http://ws.audioscrobbler.com/2.0/", params=track_info_params)
             rtdata = r2.json()
             
-            loved = rtdata["track"]["userloved"]
-            if loved is "1":
-                loved = "❤️ "
-            else:
+            try:
+                loved = rtdata["track"]["userloved"]
+                if loved is "1":
+                    loved = "❤️ "
+                else:
+                    loved = ""
+            except KeyError:
                 loved = ""
 
             np = "@attr" in rtinfo and "nowplaying" in rtinfo["@attr"]
