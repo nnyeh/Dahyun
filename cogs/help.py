@@ -29,7 +29,6 @@ class help(commands.Cog):
         embed.add_field(name=f"**>topartists** or **>ta**", value=f"Returns the top artists of the specified timeframe.", inline=False)
         embed.add_field(name=f"**>toptags** or **>tt**", value=f"Returns the top tags of the specified timeframe.", inline=False)
         embed.add_field(name=f"**>whoknows** or **>wk**", value=f"Returns the users who have listened to the artist.", inline=False)
-
         await ctx.author.send(embed=embed)
 
 def setup(bot):
