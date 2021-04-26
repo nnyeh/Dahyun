@@ -9,7 +9,7 @@ class nowplaying(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["np"])
-    async def nowplaying(self, ctx, arg=None):
+    async def nowplaying(self, ctx, arg):
         async with ctx.typing():
 
             username = db.get_user(ctx.author.id)
@@ -145,10 +145,11 @@ class nowplaying(commands.Cog):
                 title = track,
                 description = f"By **[{artist}]({artist_url})** from **[{album}]({album_url})**",
                 colour = 0x4a5fc3)
-            if arg is None:
-                embed.set_footer(text=f"{artist_tags_string.lower()}\n{track_scrobbles} ∙ {artist_scrobbles} ∙ {total_playcount} total plays")
+
             if arg is "a" or arg is "album":
                 embed.set_footer(text=f"{artist_tags_string.lower()}\n{album_scrobbles} ∙ {artist_scrobbles} ∙ {total_playcount} total plays")
+            else:
+                embed.set_footer(text=f"{artist_tags_string.lower()}\n{track_scrobbles} ∙ {artist_scrobbles} ∙ {total_playcount} total plays")
 
         embed.set_author(name=f"{loved}{state} {lastfm_username}", url=f"https://www.last.fm/user/{lastfm_username}", icon_url=pfp)
         embed.set_thumbnail(url=image)
