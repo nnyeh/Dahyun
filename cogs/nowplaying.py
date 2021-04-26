@@ -9,7 +9,7 @@ class nowplaying(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["np"])
-    async def nowplaying(self, ctx, arg):
+    async def nowplaying(self, ctx, arg=None):
         async with ctx.typing():
 
             username = db.get_user(ctx.author.id)
