@@ -98,9 +98,9 @@ class nowplaying(commands.Cog):
             try:
                 album_url = abidata["album"]["url"]
                 if abidata["album"]["userplaycount"] == "1":
-                    album_scrobbles = abidata["album"]["userplaycount"] + " album play"
+                    album_scrobbles = str(abidata["album"]["userplaycount"]) + " album play"
                 else:
-                    album_scrobbles = abidata["album"]["userplaycount"] + " album plays"
+                    album_scrobbles = str(abidata["album"]["userplaycount"]) + " album plays"
             except KeyError:
                 album_url = ""
                 album_scrobbles = "n/a"
@@ -118,9 +118,9 @@ class nowplaying(commands.Cog):
             trackdata = r5.json()
             try:
                 if trackdata["track"]["userplaycount"] == "1":
-                    track_scrobbles = trackdata["track"]["userplaycount"] + " track play"
+                    track_scrobbles = str(trackdata["track"]["userplaycount"]) + " track play"
                 else:
-                    track_scrobbles = trackdata["track"]["userplaycount"] + " track plays"
+                    track_scrobbles = str(trackdata["track"]["userplaycount"]) + " track plays"
             except KeyError:
                 track_scrobbles = "n/a"
                 
