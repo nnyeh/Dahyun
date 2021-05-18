@@ -81,7 +81,7 @@ class nowplaying(commands.Cog):
             except KeyError:
                 artist_playcount = "n/a"
             artist_url = aidata["artist"]["url"]
-            artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
+            artist_tags = [str(tag["name"]) for tag in aidata["artist"]["tags"]["tag"]]
             artist_tags_string = " ∙ ".join(artist_tags)
 
             album_info_params = {
