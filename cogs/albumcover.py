@@ -36,7 +36,6 @@ class albumcover(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
-                await asyncio.sleep(0.25)
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist = rtinfo["artist"]["#text"]
                 album = rtinfo["album"]["#text"]
@@ -71,28 +70,31 @@ class albumcover(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
                 abidata = r.json()
-                await asyncio.sleep(0.25)
 
-            actual_artist = ""
-            actual_album = ""
-            album_url = ""
-            album_cover = ""
+            actual_artist = abidata["album"]["artist"]
+            actual_album = abidata["album"]["name"]
+            api_album_cover = abidata["album"]["image"][-1]["#text"]
+            no_file_type_album_cover = api_album_cover.rsplit(".",1)[0]
+            higher_res_album_cover = no_file_type_album_cover.replace("300x300", "700x0", 1)
+
+            
             try:
-                actual_artist = abidata["album"]["artist"]
-                actual_album = abidata["album"]["name"]
                 album_url = abidata["album"]["url"]
+            except KeyError:
+                album_url = ""
+
+            try:
                 album_cover = abidata["album"]["image"][-1]["#text"]
             except KeyError:
-                embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**\n*No cover exists for this album.*", timestamp = datetime.now() - timedelta(hours=2), colour = 0x4a5fc3)
+                embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**\n\n*No cover exists for this album.*", timestamp = datetime.now() - timedelta(hours=2), colour = 0x4a5fc3)
                 embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
-                return await ctx.send(embed=embed)
 
             if album_cover == "":
-                embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**\n*No cover exists for this album.*", timestamp = datetime.now() - timedelta(hours=2), colour = 0x4a5fc3)
+                embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**\n\n*No cover exists for this album.*", timestamp = datetime.now() - timedelta(hours=2), colour = 0x4a5fc3)
                 embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
             else:
                 embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**", timestamp = datetime.now() - timedelta(hours=2), colour = 0x4a5fc3)
-                embed.set_image(url=f"{album_cover}")
+                embed.set_image(url=f"{higher_res_album_cover}")
             embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
 
         await ctx.send(embed=embed)
@@ -121,7 +123,6 @@ class albumcover(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
-                await asyncio.sleep(0.25)
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist = rtinfo["artist"]["#text"]
                 album = rtinfo["album"]["#text"]   
@@ -137,7 +138,6 @@ class albumcover(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
                 abidata = r.json()
-                await asyncio.sleep(0.25)
             else:
                 try:
                     artist, album = arg.split("|")
@@ -158,14 +158,12 @@ class albumcover(commands.Cog):
 
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
             abidata = r.json()
-            await asyncio.sleep(0.25)
+            actual_artist = abidata["album"]["artist"]
+            actual_album = abidata["album"]["name"]
+
             try:
-                actual_artist = abidata["album"]["artist"]
-                actual_album = abidata["album"]["name"]
                 album_url = abidata["album"]["url"]
             except KeyError:
-                actual_artist = ""
-                actual_album = ""
                 album_url = ""
 
             sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
