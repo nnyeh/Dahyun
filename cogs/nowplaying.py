@@ -38,7 +38,9 @@ class nowplaying(commands.Cog):
             artist = rtinfo["artist"]["#text"]
             track = rtinfo["name"]
             album = rtinfo["album"]["#text"]
-            image = rtinfo["image"][-1]["#text"]
+            api_album_cover = rtinfo["image"][-1]["#text"]
+            no_file_type_album_cover = api_album_cover.rsplit(".",1)[0]
+            higher_res_album_cover = no_file_type_album_cover.replace("300x300", "700x0", 1)
             total_playcount = rtdata["recenttracks"]["@attr"]["total"]
             track_url = rtinfo["url"]
 
@@ -155,7 +157,7 @@ class nowplaying(commands.Cog):
                 embed.set_footer(text=f"{artist_tags_string.lower()}\n{track_scrobbles} ∙ {artist_scrobbles} ∙ {total_playcount} total plays")
 
         embed.set_author(name=f"{loved}{state} {lastfm_username}", url=f"https://www.last.fm/user/{lastfm_username}", icon_url=pfp)
-        embed.set_thumbnail(url=image)
+        embed.set_thumbnail(url=higher_res_album_cover)
 
         await ctx.send(embed=embed)
 
