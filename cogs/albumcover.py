@@ -1,5 +1,4 @@
 import os
-import asyncio
 import spotipy
 import discord
 import requests
@@ -174,16 +173,16 @@ class albumcover(commands.Cog):
             lfm_album_name_lowercase = f"{actual_album.lower()}"
 
             for sp_track in items:
-                    sp_artist_correct = sp_track["artists"][0]
-                    sp_album_correct = sp_track["album"]
-                    sp_artist_name_lowercase = sp_artist_correct["name"].lower()
-                    sp_album_name_lowercase = sp_album_correct["name"].lower()
-                    if lfm_artist_name_lowercase == sp_artist_name_lowercase and lfm_album_name_lowercase == sp_album_name_lowercase:
-                        try:
-                            sp_album_image = sp_track["album"]["images"][0]["url"]
-                        except IndexError:
-                            sp_album_image = None
-                        break
+                sp_artist_correct = sp_track["artists"][0]
+                sp_album_correct = sp_track["album"]
+                sp_artist_name_lowercase = sp_artist_correct["name"].lower()
+                sp_album_name_lowercase = sp_album_correct["name"].lower()
+                if lfm_artist_name_lowercase == sp_artist_name_lowercase and lfm_album_name_lowercase == sp_album_name_lowercase:
+                    try:
+                        sp_album_image = sp_track["album"]["images"][0]["url"]
+                    except IndexError:
+                        sp_album_image = None
+                    break
 
             if sp_album_image is None:
                 embed = discord.Embed(description = f"**{actual_artist} - [{actual_album}]({album_url})**\n*No cover exists for this album.*", timestamp = datetime.now() - timedelta(hours=2), colour = 0x4a5fc3)
