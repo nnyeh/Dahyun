@@ -17,11 +17,13 @@ class nowplaying(commands.Cog):
             pfp = author.avatar_url
 
             if username is None:
-                return await ctx.send(f"`You need to first set your Last.fm username with the command`\n```>set [your username]```")
+                embed = discord.Embed(description = f"You need to first set your Last.fm username with the command\n**>set [your username]**", colour = 0x4a5fc3)
+                return await ctx.send(embed=embed)
 
             lastfm_username = username [0][1];
             if not lastfm_username:
-                return await ctx.send(f"`You need to first set your Last.fm username with the command`\n```>set [your username]```")
+                embed = discord.Embed(description = f"You need to first set your Last.fm username with the command\n**>set [your username]**", colour = 0x4a5fc3)
+                return await ctx.send(embed=embed)
             
             recent_tracks_params = {
                 "limit": "1",
@@ -34,7 +36,11 @@ class nowplaying(commands.Cog):
             r1 = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
             rtdata = r1.json()
 
-            rtinfo = rtdata["recenttracks"]["track"][0]
+            try:
+                rtinfo = rtdata["recenttracks"]["track"][0]
+            except IndexError:
+                embed = discord.Embed(description = f"**You haven't listened to anything yet on Last.fm!**", colour = 0x4a5fc3)
+                return await ctx.send(embed=embed)
             artist = rtinfo["artist"]["#text"]
             track = rtinfo["name"]
             album = rtinfo["album"]["#text"]

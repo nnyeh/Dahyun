@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 from data import database as db
 
@@ -10,7 +11,8 @@ class unsetusername(commands.Cog):
         
         db.update_user(ctx.author.id, "lastfm_username", None)
 
-        await ctx.send(f"{ctx.author.mention}`, your Last.fm username has been unset` <a:DubuRito:773333382918569984>")
+        embed = discord.Embed(description = f"Your Last.fm username has been unset <a:DubuRito:773333382918569984>", colour = 0x4a5fc3)
+        await ctx.send(f"{ctx.author.mention}", embed=embed)
 
 def setup(bot):
     bot.add_cog(unsetusername(bot))

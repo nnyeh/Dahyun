@@ -1,5 +1,5 @@
 import os
-import asyncio
+import discord
 import requests
 from discord.ext import commands
 from data import database as db
@@ -19,15 +19,16 @@ class setusername(commands.Cog):
 
         r = requests.get("http://ws.audioscrobbler.com/2.0/", params=params)
         data = r.json()
-        await asyncio.sleep(0.25)
         try:
             username = data["user"]["name"]
         except KeyError:
-            return await ctx.send(f"`Invalid Last.fm username` <a:DubuAngry:773329674679746610>")
+            embed = discord.Embed(description = f"**Invalid Last.fm username** <a:DubuAngry:773329674679746610>", colour = 0x4a5fc3)
+            return await ctx.send(embed=embed)
 
         db.update_user(ctx.author.id, "lastfm_username", username)
 
-        await ctx.send(f"{ctx.author.mention}`, your Last.fm username has been set as {username}` <a:DubuFlirt:773331886461157427>")
+        embed = discord.Embed(description = f"Your Last.fm username has been set as **{username}** <a:DubuFlirt:773331886461157427>", colour = 0x4a5fc3)
+        await ctx.send(f"{ctx.author.mention}", embed=embed)
 
 def setup(bot):
     bot.add_cog(setusername(bot))
