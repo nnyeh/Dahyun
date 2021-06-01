@@ -42,7 +42,11 @@ class combo(commands.Cog):
             rtdata = r.json()
             await asyncio.sleep(0.25)
 
-            rtinfo = rtdata["recenttracks"]["track"][0]
+            try:
+                rtinfo = rtdata["recenttracks"]["track"][0]
+            except IndexError:
+                embed = discord.Embed(description = f"**You haven't listened to anything yet on Last.fm!**", colour = 0x4a5fc3)
+                return await ctx.send(embed=embed)
             artist_name = rtinfo["artist"]["#text"]
             album_name = rtinfo["album"]["#text"]
             first_track_url = rtinfo["url"]
