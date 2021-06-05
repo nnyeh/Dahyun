@@ -17,12 +17,12 @@ class nowplaying(commands.Cog):
             pfp = author.avatar_url
 
             if username is None:
-                embed = discord.Embed(description = f"You need to first set your Last.fm username with the command\n**>set [your username]**", colour = 0x4a5fc3)
+                embed = discord.Embed(description = f"You need to first set your Last.fm username with the command\n`>set [your username]`", colour = 0x4a5fc3)
                 return await ctx.send(embed=embed)
 
             lastfm_username = username [0][1];
             if not lastfm_username:
-                embed = discord.Embed(description = f"You need to first set your Last.fm username with the command\n**>set [your username]**", colour = 0x4a5fc3)
+                embed = discord.Embed(description = f"You need to first set your Last.fm username with the command\n`>set [your username]`", colour = 0x4a5fc3)
                 return await ctx.send(embed=embed)
             
             recent_tracks_params = {
