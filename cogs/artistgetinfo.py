@@ -52,8 +52,12 @@ class artistgetinfo(commands.Cog):
                 aidata = r.json()
                 artist_url = aidata["artist"]["url"]
                 artist_info = aidata["artist"]["bio"]["summary"]
-                artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
-                artist_tags_string = " • ".join(artist_tags)
+                try:
+                    artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
+                except TypeError:
+                    artist_tags = ""
+                if artist_tags != "":
+                    artist_tags_string = " ∙ ".join(artist_tags)
 
             else:
                 artist_info_params = {
@@ -75,8 +79,12 @@ class artistgetinfo(commands.Cog):
                         ))
                 artist_url = aidata["artist"]["url"]
                 artist_info = aidata["artist"]["bio"]["summary"]
-                artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
-                artist_tags_string = " • ".join(artist_tags)
+                try:
+                    artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
+                except TypeError:
+                    artist_tags = ""
+                if artist_tags != "":
+                    artist_tags_string = " ∙ ".join(artist_tags)
 
             artist_info = artist_info.strip()
             sep = "<a"

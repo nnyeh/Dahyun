@@ -241,7 +241,7 @@ class usertoptags(commands.Cog):
             all_artist_tags = first_artist_tags + second_artist_tags + third_artist_tags + fourth_artist_tags + fifth_artist_tags + sixth_artist_tags + seventh_artist_tags + eighth_artist_tags + ninth_artist_tags + tenth_artist_tags
             random.shuffle(all_artist_tags)
             no_duplicates = set(all_artist_tags)
-            all_artist_tags_string = " • ".join(no_duplicates)
+            all_artist_tags_string = " ∙ ".join(no_duplicates)
             
             embed = discord.Embed(
                 description = f"{all_artist_tags_string.lower()}",
