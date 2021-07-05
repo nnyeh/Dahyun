@@ -83,8 +83,7 @@ class albumgetinfo(commands.Cog):
                 album_tags = [tag["name"] for tag in abidata["album"]["tags"]["tag"]]
             except TypeError:
                 album_tags = ""
-            if album_tags != "":
-                album_tags_string = " ∙ ".join(album_tags)
+            album_tags_string = " ∙ ".join(album_tags)
 
             album_info = album_info.strip()
             sep = "<a"
