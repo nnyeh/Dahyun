@@ -51,7 +51,10 @@ class artistgetinfo(commands.Cog):
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
                 aidata = r.json()
                 artist_url = aidata["artist"]["url"]
-                artist_info = aidata["artist"]["bio"]["summary"]
+                try:
+                    artist_info = aidata["artist"]["bio"]["summary"]
+                except TypeError:
+                    artist_info = ""
                 try:
                     artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
                 except TypeError:
