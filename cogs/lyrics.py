@@ -45,7 +45,10 @@ class lyrics(commands.Cog):
 
             genius = lg.Genius(skip_non_songs=True, verbose=False)
             song = genius.search_song(track, artist)
-            lyrics = song.lyrics
+            try:
+                lyrics = song.lyrics
+            except AttributeError:
+                lyrics = "*No lyrics were found.*"
             lyrics1 = lyrics[0:2000]
 
             if len(lyrics+track+artist)>2000:
@@ -71,8 +74,7 @@ class lyrics(commands.Cog):
                 if len(lyrics)>4000:
                     await ctx.send(embed=embed3)
                     if len(lyrics)>6000:
-                        await ctx.send(embed=embed4)
-                        
+                        await ctx.send(embed=embed4)         
 
 def setup(bot):
     bot.add_cog(lyrics(bot))
