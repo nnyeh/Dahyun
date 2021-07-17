@@ -49,7 +49,9 @@ class lyrics(commands.Cog):
                 lyrics = song.lyrics
             except AttributeError:
                 lyrics = "*No lyrics were found.*"
-            lyrics1 = lyrics[0:2000]
+            sep = "EmbedShare"
+            lyrics_fix = lyrics.split(sep, 1)[0]
+            lyrics1 = lyrics_fix[0:2000]
 
             if len(lyrics+track+artist)>2000:
                 lyrics2 = lyrics[2000:4000]
