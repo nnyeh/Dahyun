@@ -55,6 +55,8 @@ class artistgetinfo(commands.Cog):
                     artist_info = aidata["artist"]["bio"]["summary"]
                 except TypeError:
                     artist_info = ""
+                except KeyError:
+                    artist_info = ""
                 try:
                     artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
                 except TypeError:
