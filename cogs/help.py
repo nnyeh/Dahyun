@@ -32,6 +32,7 @@ class help(commands.Cog):
         embed.add_field(name=f"**>whoknows** or **>wk**", value=f"Returns the users who have listened to the artist.", inline=False)
 
         try:
+            await ctx.send(f"`Sent you a direct message.`")
             await ctx.author.send(embed=embed)
         except discord.Forbidden:
             await ctx.send(f"`Enable direct messages for this server to use this command.`")
