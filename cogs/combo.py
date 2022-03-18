@@ -87,29 +87,32 @@ class combo(commands.Cog):
             tracks = rtdata["recenttracks"]["track"]
             first_artist_obj = tracks[0]
             first_artist_name = first_artist_obj["artist"]["#text"]
+            first_artist_name_lower = first_artist_obj["artist"]["#text"].lower()
             first_artist_album = first_artist_obj["album"]["#text"]
+            first_artist_album_lower = first_artist_obj["album"]["#text"].lower()
             first_artist_track = first_artist_obj["name"]
+            first_artist_track_lower = first_artist_obj["name"].lower()
 
             first_artist_combo = 0
             first_album_combo = 0
             first_track_combo = 0
 
             for track in tracks: 
-                if (track["artist"]["#text"] == first_artist_name):
+                if (track["artist"]["#text"].lower() == first_artist_name_lower):
                     if 0 <= first_artist_combo < 1000:
                         first_artist_combo += 1
                 else:
                     break
 
             for track in tracks: 
-                if (track["album"]["#text"] == first_artist_album):
+                if (track["album"]["#text"].lower() == first_artist_album_lower):
                     if 0 <= first_album_combo < 1000:
                         first_album_combo += 1
                 else:
                     break
 
             for track in tracks: 
-                if (track["name"] == first_artist_track):
+                if (track["name"].lower() == first_artist_track_lower):
                     if 0 <= first_track_combo < 1000:
                         first_track_combo += 1
                 else:
