@@ -1,7 +1,7 @@
 import os
-import asyncio
 import discord
 import requests
+import urllib.parse
 from discord.ext import commands
 from data import database as db
 from datetime import datetime, timedelta
@@ -42,7 +42,6 @@ class combo(commands.Cog):
 
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
             rtdata = r.json()
-            await asyncio.sleep(0.25)
 
             try:
                 rtinfo = rtdata["recenttracks"]["track"][0]
@@ -51,22 +50,8 @@ class combo(commands.Cog):
                 return await ctx.send(embed=embed)
             artist_name = rtinfo["artist"]["#text"]
             album_name = rtinfo["album"]["#text"]
-            first_track_url = rtinfo["url"]
 
             np = "@attr" in rtinfo and "nowplaying" in rtinfo["@attr"]
-
-            artist_info_params = {
-                "artist": artist_name,
-                "user": lastfm_username,
-                "api_key": os.getenv("LASTFM_API_KEY"),
-                "format": "json",
-                "method": "artist.getInfo"
-            }
-
-            r2 = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
-            aidata = r2.json()
-            await asyncio.sleep(0.25)
-            first_artist_url = aidata["artist"]["url"]
 
             album_info_params = {
                 "artist": artist_name,
@@ -79,11 +64,14 @@ class combo(commands.Cog):
 
             r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
             abidata = r3.json()
-            await asyncio.sleep(0.25)
             try:
                 first_album_url = abidata["album"]["url"]
             except KeyError:
                 first_album_url = ""
+
+            first_artist_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{artist_name}", safe="/")
+            first_track_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{artist_name}/{album_name}/{track}", safe="/")
+
             tracks = rtdata["recenttracks"]["track"]
             first_artist_obj = tracks[0]
             first_artist_name = first_artist_obj["artist"]["#text"]
@@ -134,24 +122,11 @@ class combo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
-                await asyncio.sleep(0.25)
 
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist_name = rtinfo["artist"]["#text"]
                 album_name = rtinfo["album"]["#text"]
 
-                album_info_params = {
-                    "artist": artist_name,
-                    "album": album_name,
-                    "user": lastfm_username,
-                    "api_key": os.getenv("LASTFM_API_KEY"),
-                    "format": "json",
-                    "method": "album.getInfo"
-                }
-
-                r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
-                abidata = r3.json()
-                await asyncio.sleep(0.25)
                 tracks = rtdata["recenttracks"]["track"]
 
                 if first_artist_combo == 1000:
@@ -194,24 +169,11 @@ class combo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
-                await asyncio.sleep(0.25)
 
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist_name = rtinfo["artist"]["#text"]
                 album_name = rtinfo["album"]["#text"]
 
-                album_info_params = {
-                    "artist": artist_name,
-                    "album": album_name,
-                    "user": lastfm_username,
-                    "api_key": os.getenv("LASTFM_API_KEY"),
-                    "format": "json",
-                    "method": "album.getInfo"
-                }
-
-                r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
-                abidata = r3.json()
-                await asyncio.sleep(0.25)
                 tracks = rtdata["recenttracks"]["track"]
 
                 if second_artist_combo == 1000:
@@ -254,24 +216,11 @@ class combo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
-                await asyncio.sleep(0.25)
 
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist_name = rtinfo["artist"]["#text"]
                 album_name = rtinfo["album"]["#text"]
 
-                album_info_params = {
-                    "artist": artist_name,
-                    "album": album_name,
-                    "user": lastfm_username,
-                    "api_key": os.getenv("LASTFM_API_KEY"),
-                    "format": "json",
-                    "method": "album.getInfo"
-                }
-
-                r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
-                abidata = r3.json()
-                await asyncio.sleep(0.25)
                 tracks = rtdata["recenttracks"]["track"]
 
                 if third_artist_combo == 1000:
@@ -314,24 +263,11 @@ class combo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
-                await asyncio.sleep(0.25)
 
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 artist_name = rtinfo["artist"]["#text"]
                 album_name = rtinfo["album"]["#text"]
 
-                album_info_params = {
-                    "artist": artist_name,
-                    "album": album_name,
-                    "user": lastfm_username,
-                    "api_key": os.getenv("LASTFM_API_KEY"),
-                    "format": "json",
-                    "method": "album.getInfo"
-                }
-
-                r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
-                abidata = r3.json()
-                await asyncio.sleep(0.25)
                 tracks = rtdata["recenttracks"]["track"]
 
                 if fourth_artist_combo == 1000:

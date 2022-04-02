@@ -1,7 +1,7 @@
 import os
-import asyncio
 import discord
 import requests
+import urllib.parse
 from discord.ext import commands
 from data import database as db
 
@@ -35,7 +35,6 @@ class albumgetinfo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
-                await asyncio.sleep(0.25)
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 album_cover = rtinfo["image"][-1]["#text"]
                 actual_artist = rtinfo["artist"]["#text"]
@@ -64,7 +63,6 @@ class albumgetinfo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=params)
                 abidata = r.json()
-                await asyncio.sleep(0.25)
 
             try:
                 actual_artist = abidata["album"]["artist"]
@@ -77,7 +75,7 @@ class albumgetinfo(commands.Cog):
 
 
             actual_album = abidata["album"]["name"]
-            album_url = abidata["album"]["url"]
+            album_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{actual_artist}/{actual_album}", safe="/")
             album_cover = abidata["album"]["image"][-1]["#text"]
             try:
                 album_tags = [tag["name"] for tag in abidata["album"]["tags"]["tag"]]

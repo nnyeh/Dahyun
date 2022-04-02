@@ -2,6 +2,7 @@ import os
 import spotipy
 import discord
 import requests
+import urllib.parse
 from discord.ext import commands
 from data import database as db
 from datetime import datetime, timedelta
@@ -77,12 +78,7 @@ class albumcover(commands.Cog):
             api_album_cover = abidata["album"]["image"][-1]["#text"]
             no_file_type_album_cover = api_album_cover.rsplit(".",1)[0]
             higher_res_album_cover = no_file_type_album_cover.replace("300x300", "700x0", 1)
-
-            
-            try:
-                album_url = abidata["album"]["url"]
-            except KeyError:
-                album_url = ""
+            album_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{artist}/{album}", safe="/")
 
             try:
                 album_cover = abidata["album"]["image"][-1]["#text"]
@@ -161,11 +157,7 @@ class albumcover(commands.Cog):
             abidata = r.json()
             actual_artist = abidata["album"]["artist"]
             actual_album = abidata["album"]["name"]
-
-            try:
-                album_url = abidata["album"]["url"]
-            except KeyError:
-                album_url = ""
+            album_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{artist}/{album}", safe="/")
 
             sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
             sp_album_image = ""

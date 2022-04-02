@@ -1,8 +1,8 @@
 import os
 import spotipy
-import asyncio
 import discord
 import requests
+import urllib.parse
 from discord.ext import commands
 from data import database as db
 from spotipy.oauth2 import SpotifyClientCredentials
@@ -37,7 +37,6 @@ class artistgetinfo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=recent_tracks_params)
                 rtdata = r.json()
-                await asyncio.sleep(0.25)
                 rtinfo = rtdata["recenttracks"]["track"][0]
                 actual_artist = rtinfo["artist"]["#text"]
 
@@ -50,7 +49,8 @@ class artistgetinfo(commands.Cog):
 
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
                 aidata = r.json()
-                artist_url = aidata["artist"]["url"]
+
+                artist_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{actual_artist}", safe="/")
                 try:
                     artist_info = aidata["artist"]["bio"]["summary"]
                 except TypeError:
@@ -73,7 +73,6 @@ class artistgetinfo(commands.Cog):
             
                 r = requests.get("http://ws.audioscrobbler.com/2.0/", params=artist_info_params)
                 aidata = r.json()
-                await asyncio.sleep(0.25)
                 try:
                     actual_artist = aidata["artist"]["name"]
                 except KeyError:
@@ -81,7 +80,7 @@ class artistgetinfo(commands.Cog):
                         description = f"This artist doesn't exist.",
                         colour = 0x4a5fc3
                         ))
-                artist_url = aidata["artist"]["url"]
+                artist_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{actual_artist}", safe="/")
                 artist_info = aidata["artist"]["bio"]["summary"]
                 try:
                     artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]

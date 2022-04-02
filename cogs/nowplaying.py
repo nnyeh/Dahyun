@@ -1,6 +1,7 @@
 import os
 import discord
 import requests
+import urllib.parse
 from discord.ext import commands
 from data import database as db
 
@@ -48,7 +49,7 @@ class nowplaying(commands.Cog):
             no_file_type_album_cover = api_album_cover.rsplit(".",1)[0]
             higher_res_album_cover = no_file_type_album_cover.replace("300x300", "700x0", 1)
             total_playcount = rtdata["recenttracks"]["@attr"]["total"]
-            track_url = rtinfo["url"]
+            track_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{artist}/{album}/{track}", safe="/")
 
             track_info_params = {
                 "track": track,
@@ -88,10 +89,10 @@ class nowplaying(commands.Cog):
                 artist_playcount = aidata["artist"]["stats"]["userplaycount"]
             except KeyError:
                 artist_playcount = "n/a"
-            artist_url = aidata["artist"]["url"]
+            artist_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{artist}", safe="/")
             try:
                 artist_tags = [tag["name"] for tag in aidata["artist"]["tags"]["tag"]]
-            except TypeError:
+            except (TypeError, KeyError):
                 artist_tags = ""
             artist_tags_string = " ∙ ".join(artist_tags)
 
@@ -106,14 +107,13 @@ class nowplaying(commands.Cog):
 
             r4 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
             abidata = r4.json()
+            album_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{artist}/{album}", safe="/")
             try:
-                album_url = abidata["album"]["url"]
                 if abidata["album"]["userplaycount"] == "1":
                     album_scrobbles = str(abidata["album"]["userplaycount"]) + " album play"
                 else:
                     album_scrobbles = str(abidata["album"]["userplaycount"]) + " album plays"
             except KeyError:
-                album_url = ""
                 album_scrobbles = "n/a"
 
             track_info_params = {
