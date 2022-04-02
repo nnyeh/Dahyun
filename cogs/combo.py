@@ -50,6 +50,7 @@ class combo(commands.Cog):
                 return await ctx.send(embed=embed)
             artist_name = rtinfo["artist"]["#text"]
             album_name = rtinfo["album"]["#text"]
+            track_name = rtinfo["name"]
 
             np = "@attr" in rtinfo and "nowplaying" in rtinfo["@attr"]
 
@@ -64,13 +65,13 @@ class combo(commands.Cog):
 
             r3 = requests.get("http://ws.audioscrobbler.com/2.0/", params=album_info_params)
             abidata = r3.json()
+
+            first_artist_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{artist_name}", safe="/")
             try:
                 first_album_url = abidata["album"]["url"]
             except KeyError:
-                first_album_url = ""
-
-            first_artist_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{artist_name}", safe="/")
-            first_track_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{artist_name}/{album_name}/{track}", safe="/")
+                first_album_url = ""            
+            first_track_url = f"https://www.last.fm/music/" + urllib.parse.quote_plus(f"{artist_name}/{album_name}/{track_name}", safe="/")
 
             tracks = rtdata["recenttracks"]["track"]
             first_artist_obj = tracks[0]
