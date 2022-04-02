@@ -1,5 +1,4 @@
 import os
-import asyncio
 import discord
 import requests
 from discord.ext import commands
@@ -32,7 +31,6 @@ class genregetinfo(commands.Cog):
 
             r = requests.get("http://ws.audioscrobbler.com/2.0/", params=genre_info_params)
             gidata = r.json()
-            await asyncio.sleep(0.25)
             try:
                 arg = gidata["tag"]["name"]
             except KeyError:
