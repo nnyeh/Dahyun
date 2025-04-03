@@ -20,6 +20,11 @@ bot = commands.Bot(command_prefix=">", intents=intents, case_insensitive=True)
 async def on_ready():
     clear = lambda: os.system("cls")
     clear()
+    try:
+        synced = await bot.tree.sync()
+        print(f"Synced {len(synced)} global commands")
+    except Exception as e:
+        print(f"Sync error: {e}")
     print("Online")
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="music"))
 
@@ -35,6 +40,7 @@ bot.remove_command("help")
 # Load all extensions
 async def setup_hook():
     extensions = [
+        "cogs.addalbum",
         "cogs.albumcover",
         "cogs.albumgetinfo", 
         "cogs.artistgetinfo",
