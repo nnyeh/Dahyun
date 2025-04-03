@@ -78,5 +78,5 @@ class lyrics(commands.Cog):
                     if len(lyrics)>6000:
                         await ctx.send(embed=embed4)         
 
-def setup(bot):
-    bot.add_cog(lyrics(bot))
+async def setup(bot):
+    await bot.add_cog(lyrics(bot))

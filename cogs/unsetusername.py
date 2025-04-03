@@ -14,5 +14,5 @@ class unsetusername(commands.Cog):
         embed = discord.Embed(description = f"Your Last.fm username has been unset <a:DubuRito:773333382918569984>", colour = 0x4a5fc3)
         await ctx.send(f"{ctx.author.mention}", embed=embed)
 
-def setup(bot):
-    bot.add_cog(unsetusername(bot))
+async def setup(bot):
+    await bot.add_cog(unsetusername(bot))

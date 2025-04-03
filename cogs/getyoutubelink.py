@@ -70,5 +70,5 @@ class getyoutubelink(commands.Cog):
 
         await ctx.send(f"{state}\n{video_url}")
 
-def setup(bot):
-    bot.add_cog(getyoutubelink(bot))
+async def setup(bot):
+    await bot.add_cog(getyoutubelink(bot))

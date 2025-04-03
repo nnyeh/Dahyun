@@ -15,7 +15,7 @@ class nowplaying(commands.Cog):
 
             username = db.get_user(ctx.author.id)
             author = ctx.message.author
-            pfp = author.avatar_url
+            pfp = author.avatar.url
 
             if username is None:
                 embed = discord.Embed(description = f"You need to first set your Last.fm username with the command\n`>set [your username]`", colour = 0x4a5fc3)
@@ -65,7 +65,7 @@ class nowplaying(commands.Cog):
             
             try:
                 loved = rtdata["track"]["userloved"]
-                if loved is "1":
+                if loved == "1":
                     loved = "❤️ "
                 else:
                     loved = ""
@@ -157,7 +157,7 @@ class nowplaying(commands.Cog):
                 description = f"By **[{artist}]({artist_url})** from **[{album}]({album_url})**",
                 colour = 0x4a5fc3)
 
-            if arg is "a" or arg is "album":
+            if arg == "a" or arg == "album":
                 embed.set_footer(text=f"{artist_tags_string.lower()}\n{album_scrobbles} ∙ {artist_scrobbles} ∙ {total_playcount} total plays")
             else:
                 embed.set_footer(text=f"{artist_tags_string.lower()}\n{track_scrobbles} ∙ {artist_scrobbles} ∙ {total_playcount} total plays")
@@ -167,5 +167,5 @@ class nowplaying(commands.Cog):
 
         await ctx.send(embed=embed)
 
-def setup(bot):
-    bot.add_cog(nowplaying(bot))
+async def setup(bot):
+    await bot.add_cog(nowplaying(bot))

@@ -38,5 +38,5 @@ class help(commands.Cog):
             await ctx.send(f"`Enable direct messages for this server to use this command.`")
         
 
-def setup(bot):
-    bot.add_cog(help(bot))
+async def setup(bot):
+    await bot.add_cog(help(bot))

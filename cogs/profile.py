@@ -22,5 +22,5 @@ class profile(commands.Cog):
 
         await ctx.send(f"https://www.last.fm/user/{lastfm_username}")
 
-def setup(bot):
-    bot.add_cog(profile(bot))
+async def setup(bot):
+    await bot.add_cog(profile(bot))

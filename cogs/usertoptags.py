@@ -43,7 +43,7 @@ class usertoptags(commands.Cog):
                 
             username = db.get_user(ctx.author.id)
             author = ctx.message.author
-            pfp = author.avatar_url
+            pfp = author.avatar.url
             if username is None:
                 embed = discord.Embed(description = f"You need to first set your Last.fm username with the command\n`>set [your username]`", colour = 0x4a5fc3)
                 return await ctx.send(embed=embed)
@@ -242,5 +242,5 @@ class usertoptags(commands.Cog):
 
         await ctx.send(embed=embed)
 
-def setup(bot):
-    bot.add_cog(usertoptags(bot))
+async def setup(bot):
+    await bot.add_cog(usertoptags(bot))

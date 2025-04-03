@@ -18,6 +18,9 @@ class whoknows(commands.Cog):
     async def whoknows(self, ctx, *, arg=None):
         async with ctx.typing():
 
+            username = db.get_user(ctx.author.id)
+            if ctx.author.id == 202534850119335937:
+
                 if arg is None:
                     username = db.get_user(ctx.author.id)
 
@@ -119,10 +122,10 @@ class whoknows(commands.Cog):
             
                 if sp_artist_image is not None:
                     embed.set_thumbnail(url=f"{sp_artist_image}")
-                    embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
-                    await ctx.send(embed=embed)
-                else:
-                    await ctx.send("`Only Emsa can do this command :)`")
+                embed.set_footer(text=f"Requested by {ctx.author.name}#{ctx.author.discriminator}")
+                await ctx.send(embed=embed)
+            else:
+                await ctx.send("`Only Emsa can do this command :)`")
 
-def setup(bot):
-    bot.add_cog(whoknows(bot))
+async def setup(bot):
+    await bot.add_cog(whoknows(bot))

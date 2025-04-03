@@ -30,5 +30,5 @@ class setusername(commands.Cog):
         embed = discord.Embed(description = f"Your Last.fm username has been set as **{username}** <a:DubuFlirt:773331886461157427>", colour = 0x4a5fc3)
         await ctx.send(f"{ctx.author.mention}", embed=embed)
 
-def setup(bot):
-    bot.add_cog(setusername(bot))
+async def setup(bot):
+    await bot.add_cog(setusername(bot))

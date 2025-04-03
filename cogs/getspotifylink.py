@@ -65,5 +65,5 @@ class getspotifylink(commands.Cog):
 
         await ctx.send(f"{state}\n{sp_track_url}")
 
-def setup(bot):
-    bot.add_cog(getspotifylink(bot))
+async def setup(bot):
+    await bot.add_cog(getspotifylink(bot))

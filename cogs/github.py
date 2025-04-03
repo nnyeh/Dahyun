@@ -9,5 +9,5 @@ class github(commands.Cog):
 
         await ctx.send(f"https://github.com/nnyeh/dahyun")
 
-def setup(bot):
-    bot.add_cog(github(bot))
+async def setup(bot):
+    await bot.add_cog(github(bot))
