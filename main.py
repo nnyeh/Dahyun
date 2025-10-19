@@ -40,7 +40,7 @@ bot.remove_command("help")
 # Load all extensions
 async def setup_hook():
     extensions = [
-        "cogs.addalbum",
+        "cogs.addmedia",
         "cogs.albumcover",
         "cogs.albumgetinfo", 
         "cogs.artistgetinfo",
